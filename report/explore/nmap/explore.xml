@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.91 scan initiated Thu Jul 29 08:18:16 2021 as: nmap -Pn -p- -sC -sV -oA nmap/explore -vvv 10.10.10.247 -->
+<nmaprun scanner="nmap" args="nmap -Pn -p- -sC -sV -oA nmap/explore -vvv 10.10.10.247" start="1627539496" startstr="Thu Jul 29 08:18:16 2021" version="7.91" xmloutputversion="1.05">
+<scaninfo type="syn" protocol="tcp" numservices="65535" services="1-65535"/>
+<verbose level="3"/>
+<debugging level="0"/>
+<taskbegin task="NSE" time="1627539497"/>
+<taskend task="NSE" time="1627539497"/>
+<taskbegin task="NSE" time="1627539497"/>
+<taskend task="NSE" time="1627539497"/>
+<taskbegin task="NSE" time="1627539497"/>
+<taskend task="NSE" time="1627539497"/>
+<taskbegin task="Parallel DNS resolution of 1 host." time="1627539497"/>
+<taskend task="Parallel DNS resolution of 1 host." time="1627539497"/>
+<taskbegin task="SYN Stealth Scan" time="1627539497"/>
+<taskprogress task="SYN Stealth Scan" time="1627539528" percent="3.22" remaining="934" etc="1627540461"/>
+<taskprogress task="SYN Stealth Scan" time="1627539536" percent="3.77" remaining="995" etc="1627540531"/>
+<taskprogress task="SYN Stealth Scan" time="1627539566" percent="8.01" remaining="793" etc="1627540359"/>
+<taskprogress task="SYN Stealth Scan" time="1627539581" percent="10.15" remaining="744" etc="1627540325"/>
+<taskprogress task="SYN Stealth Scan" time="1627539611" percent="14.39" remaining="679" etc="1627540289"/>
+<taskprogress task="SYN Stealth Scan" time="1627539641" percent="18.59" remaining="631" etc="1627540271"/>
+<taskprogress task="SYN Stealth Scan" time="1627539649" percent="19.71" remaining="620" etc="1627540268"/>
+<taskprogress task="SYN Stealth Scan" time="1627539652" percent="20.15" remaining="615" etc="1627540266"/>
+<taskprogress task="SYN Stealth Scan" time="1627539682" percent="24.36" remaining="575" etc="1627540256"/>
+<taskprogress task="SYN Stealth Scan" time="1627539718" percent="29.30" remaining="534" etc="1627540251"/>
+<taskprogress task="SYN Stealth Scan" time="1627539751" percent="33.91" remaining="495" etc="1627540246"/>
+<taskprogress task="SYN Stealth Scan" time="1627539784" percent="38.57" remaining="458" etc="1627540241"/>
+<taskprogress task="SYN Stealth Scan" time="1627539786" percent="38.91" remaining="454" etc="1627540240"/>
+<taskprogress task="SYN Stealth Scan" time="1627539787" percent="39.10" remaining="452" etc="1627540239"/>
+<taskprogress task="SYN Stealth Scan" time="1627539823" percent="44.04" remaining="415" etc="1627540237"/>
+<taskprogress task="SYN Stealth Scan" time="1627539849" percent="47.74" remaining="386" etc="1627540234"/>
+<taskprogress task="SYN Stealth Scan" time="1627539849" percent="47.87" remaining="384" etc="1627540232"/>
+<taskprogress task="SYN Stealth Scan" time="1627539888" percent="53.27" remaining="343" etc="1627540231"/>
+<taskprogress task="SYN Stealth Scan" time="1627539924" percent="58.44" remaining="304" etc="1627540228"/>
+<taskprogress task="SYN Stealth Scan" time="1627539953" percent="62.75" remaining="271" etc="1627540224"/>
+<taskprogress task="SYN Stealth Scan" time="1627539989" percent="67.88" remaining="233" etc="1627540222"/>
+<taskprogress task="SYN Stealth Scan" time="1627540025" percent="73.03" remaining="196" etc="1627540220"/>
+<taskprogress task="SYN Stealth Scan" time="1627540061" percent="78.15" remaining="158" etc="1627540219"/>
+<taskprogress task="SYN Stealth Scan" time="1627540097" percent="83.24" remaining="121" etc="1627540218"/>
+<taskprogress task="SYN Stealth Scan" time="1627540116" percent="86.04" remaining="101" etc="1627540216"/>
+<taskprogress task="SYN Stealth Scan" time="1627540155" percent="91.46" remaining="62" etc="1627540216"/>
+<taskend task="SYN Stealth Scan" time="1627540217" extrainfo="65535 total ports"/>
+<taskbegin task="Service scan" time="1627540217"/>
+<taskend task="Service scan" time="1627540314" extrainfo="4 services on 1 host"/>
+<taskbegin task="NSE" time="1627540314"/>
+<taskend task="NSE" time="1627540317"/>
+<taskbegin task="NSE" time="1627540317"/>
+<taskend task="NSE" time="1627540318"/>
+<taskbegin task="NSE" time="1627540318"/>
+<taskend task="NSE" time="1627540318"/>
+<host starttime="1627539497" endtime="1627540318"><status state="up" reason="user-set" reason_ttl="0"/>
+<address addr="10.10.10.247" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="65530">
+<extrareasons reason="resets" count="65530"/>
+</extraports>
+<port protocol="tcp" portid="2222"><state state="open" reason="syn-ack" reason_ttl="63"/><service name="ssh" extrainfo="protocol 2.0" servicefp="SF-Port2222-TCP:V=7.91%I=7%D=7/29%Time=61024AFF%P=x86_64-unknown-linux-gnu%r(NULL,24,&quot;SSH-2\.0-SSH\x20Server\x20-\x20Banana\x20Studio\r\n&quot;);" method="probed" conf="10"/><script id="fingerprint-strings" output="&#xa;  NULL: &#xa;    SSH-2.0-SSH Server - Banana Studio"><elem key="NULL">&#xa;    SSH-2.0-SSH Server - Banana Studio</elem>
+</script><script id="ssh-hostkey" output="&#xa;  2048 71:90:e3:a7:c9:5d:83:66:34:88:3d:eb:b4:c7:88:fb (RSA)&#xa;ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCqK2WZkEVE0CPTPpWoyDKZkHVrmffyDgcNNVK3PkamKs3M8tyqeFBivz4o8i9Ai8UlrVZ8mztI3qb+cHCdLMDpaO0ghf/50qYVGH4gU5vuVN0tbBJAR67ot4U+7WCcdh4sZHX5NNatyE36wpKj9t7n2XpEmIYda4CEIeUOy2Mm3Es+GD0AAUl8xG4uMYd2rdrJrrO1p15PO97/1ebsTH6SgFz3qjZvSirpom62WmmMbfRvJtNFiNJRydDpJvag2urk16GM9a0buF4h1JCGwMHxpSY05aKQLo8shdb9SxJRa9lMu3g2zgiDAmBCoKjsiPnuyWW+8G7Vz7X6nJC87KpL"><table>
+<elem key="bits">2048</elem>
+<elem key="type">ssh-rsa</elem>
+<elem key="fingerprint">7190e3a7c95d836634883debb4c788fb</elem>
+<elem key="key">AAAAB3NzaC1yc2EAAAADAQABAAABAQCqK2WZkEVE0CPTPpWoyDKZkHVrmffyDgcNNVK3PkamKs3M8tyqeFBivz4o8i9Ai8UlrVZ8mztI3qb+cHCdLMDpaO0ghf/50qYVGH4gU5vuVN0tbBJAR67ot4U+7WCcdh4sZHX5NNatyE36wpKj9t7n2XpEmIYda4CEIeUOy2Mm3Es+GD0AAUl8xG4uMYd2rdrJrrO1p15PO97/1ebsTH6SgFz3qjZvSirpom62WmmMbfRvJtNFiNJRydDpJvag2urk16GM9a0buF4h1JCGwMHxpSY05aKQLo8shdb9SxJRa9lMu3g2zgiDAmBCoKjsiPnuyWW+8G7Vz7X6nJC87KpL</elem>
+</table>
+</script></port>
+<port protocol="tcp" portid="5555"><state state="filtered" reason="no-response" reason_ttl="0"/><service name="freeciv" method="table" conf="3"/></port>
+<port protocol="tcp" portid="42135"><state state="open" reason="syn-ack" reason_ttl="63"/><service name="http" product="ES File Explorer Name Response httpd" devicetype="phone" method="probed" conf="10"><cpe>cpe:/a:estrongs:es_file_explorer</cpe></service><script id="http-title" output="Site doesn&apos;t have a title (text/html)."></script></port>
+<port protocol="tcp" portid="44099"><state state="open" reason="syn-ack" reason_ttl="63"/><service name="unknown" servicefp="SF-Port44099-TCP:V=7.91%I=7%D=7/29%Time=61024AFE%P=x86_64-unknown-linux-gnu%r(GenericLines,AA,&quot;HTTP/1\.0\x20400\x20Bad\x20Request\r\nDate:\x20Thu,\x2029\x20Jul\x202021\x2006:29:24\x20GMT\r\nContent-Length:\x2022\r\nContent-Type:\x20text/plain;\x20charset=US-ASCII\r\nConnection:\x20Close\r\n\r\nInvalid\x20request\x20line:\x20&quot;)%r(GetRequest,5C,&quot;HTTP/1\.1\x20412\x20Precondition\x20Failed\r\nDate:\x20Thu,\x2029\x20Jul\x202021\x2006:29:24\x20GMT\r\nContent-Length:\x200\r\n\r\n&quot;)%r(HTTPOptions,B5,&quot;HTTP/1\.0\x20501\x20Not\x20Implemented\r\nDate:\x20Thu,\x2029\x20Jul\x202021\x2006:29:29\x20GMT\r\nContent-Length:\x2029\r\nContent-Type:\x20text/plain;\x20charset=US-ASCII\r\nConnection:\x20Close\r\n\r\nMethod\x20not\x20supported:\x20OPTIONS&quot;)%r(RTSPRequest,BB,&quot;HTTP/1\.0\x20400\x20Bad\x20Request\r\nDate:\x20Thu,\x2029\x20Jul\x202021\x2006:29:29\x20GMT\r\nContent-Length:\x2039\r\nContent-Type:\x20text/plain;\x20charset=US-ASCII\r\nConnection:\x20Close\r\n\r\nNot\x20a\x20valid\x20protocol\x20version:\x20\x20RTSP/1\.0&quot;)%r(Help,AE,&quot;HTTP/1\.0\x20400\x20Bad\x20Request\r\nDate:\x20Thu,\x2029\x20Jul\x202021\x2006:29:45\x20GMT\r\nContent-Length:\x2026\r\nContent-Type:\x20text/plain;\x20charset=US-ASCII\r\nConnection:\x20Close\r\n\r\nInvalid\x20request\x20line:\x20HELP&quot;)%r(SSLSessionReq,DD,&quot;HTTP/1\.0\x20400\x20Bad\x20Request\r\nDate:\x20Thu,\x2029\x20Jul\x202021\x2006:29:45\x20GMT\r\nContent-Length:\x2073\r\nContent-Type:\x20text/plain;\x20charset=US-ASCII\r\nConnection:\x20Close\r\n\r\nInvalid\x20request\x20line:\x20\x16\x03\0\0S\x01\0\0O\x03\0\?G\?\?\?,\?\?\?`~\?\0\?\?{\?\?\?\?w\?\?\?\?&lt;=\?o\?\x10n\0\0\(\0\x16\0\x13\0&quot;)%r(TerminalServerCookie,CA,&quot;HTTP/1\.0\x20400\x20Bad\x20Request\r\nDate:\x20Thu,\x2029\x20Jul\x202021\x2006:29:45\x20GMT\r\nContent-Length:\x2054\r\nContent-Type:\x20text/plain;\x20charset=US-ASCII\r\nConnection:\x20Close\r\n\r\nInvalid\x20request\x20line:\x20\x03\0\0\*%\?\0\0\0\0\0Cookie:\x20mstshash=nmap&quot;)%r(TLSSessionReq,DB,&quot;HTTP/1\.0\x20400\x20Bad\x20Request\r\nDate:\x20Thu,\x2029\x20Jul\x202021\x2006:29:45\x20GMT\r\nContent-Length:\x2071\r\nContent-Type:\x20text/plain;\x20charset=US-ASCII\r\nConnection:\x20Close\r\n\r\nInvalid\x20request\x20line:\x20\x16\x03\0\0i\x01\0\0e\x03\x03U\x1c\?\?random1random2random3random4\0\0\x0c\0/\0&quot;);" method="table" conf="3"/><script id="fingerprint-strings" output="&#xa;  GenericLines: &#xa;    HTTP/1.0 400 Bad Request&#xa;    Date: Thu, 29 Jul 2021 06:29:24 GMT&#xa;    Content-Length: 22&#xa;    Content-Type: text/plain; charset=US-ASCII&#xa;    Connection: Close&#xa;    Invalid request line:&#xa;  GetRequest: &#xa;    HTTP/1.1 412 Precondition Failed&#xa;    Date: Thu, 29 Jul 2021 06:29:24 GMT&#xa;    Content-Length: 0&#xa;  HTTPOptions: &#xa;    HTTP/1.0 501 Not Implemented&#xa;    Date: Thu, 29 Jul 2021 06:29:29 GMT&#xa;    Content-Length: 29&#xa;    Content-Type: text/plain; charset=US-ASCII&#xa;    Connection: Close&#xa;    Method not supported: OPTIONS&#xa;  Help: &#xa;    HTTP/1.0 400 Bad Request&#xa;    Date: Thu, 29 Jul 2021 06:29:45 GMT&#xa;    Content-Length: 26&#xa;    Content-Type: text/plain; charset=US-ASCII&#xa;    Connection: Close&#xa;    Invalid request line: HELP&#xa;  RTSPRequest: &#xa;    HTTP/1.0 400 Bad Request&#xa;    Date: Thu, 29 Jul 2021 06:29:29 GMT&#xa;    Content-Length: 39&#xa;    Content-Type: text/plain; charset=US-ASCII&#xa;    Connection: Close&#xa;    valid protocol version: RTSP/1.0&#xa;  SSLSessionReq: &#xa;    HTTP/1.0 400 Bad Request&#xa;    Date: Thu, 29 Jul 2021 06:29:45 GMT&#xa;    Content-Length: 73&#xa;    Content-Type: text/plain; charset=US-ASCII&#xa;    Connection: Close&#xa;    Invalid request line: &#xa;    ?G???,???`~?&#xa;    ??{????w????&lt;=?o?&#xa;  TLSSessionReq: &#xa;    HTTP/1.0 400 Bad Request&#xa;    Date: Thu, 29 Jul 2021 06:29:45 GMT&#xa;    Content-Length: 71&#xa;    Content-Type: text/plain; charset=US-ASCII&#xa;    Connection: Close&#xa;    Invalid request line: &#xa;    ??random1random2random3random4&#xa;  TerminalServerCookie: &#xa;    HTTP/1.0 400 Bad Request&#xa;    Date: Thu, 29 Jul 2021 06:29:45 GMT&#xa;    Content-Length: 54&#xa;    Content-Type: text/plain; charset=US-ASCII&#xa;    Connection: Close&#xa;    Invalid request line: &#xa;    Cookie: mstshash=nmap"><elem key="GenericLines">&#xa;    HTTP/1.0 400 Bad Request&#xa;    Date: Thu, 29 Jul 2021 06:29:24 GMT&#xa;    Content-Length: 22&#xa;    Content-Type: text/plain; charset=US-ASCII&#xa;    Connection: Close&#xa;    Invalid request line:</elem>
+<elem key="GetRequest">&#xa;    HTTP/1.1 412 Precondition Failed&#xa;    Date: Thu, 29 Jul 2021 06:29:24 GMT&#xa;    Content-Length: 0</elem>
+<elem key="HTTPOptions">&#xa;    HTTP/1.0 501 Not Implemented&#xa;    Date: Thu, 29 Jul 2021 06:29:29 GMT&#xa;    Content-Length: 29&#xa;    Content-Type: text/plain; charset=US-ASCII&#xa;    Connection: Close&#xa;    Method not supported: OPTIONS</elem>
+<elem key="Help">&#xa;    HTTP/1.0 400 Bad Request&#xa;    Date: Thu, 29 Jul 2021 06:29:45 GMT&#xa;    Content-Length: 26&#xa;    Content-Type: text/plain; charset=US-ASCII&#xa;    Connection: Close&#xa;    Invalid request line: HELP</elem>
+<elem key="RTSPRequest">&#xa;    HTTP/1.0 400 Bad Request&#xa;    Date: Thu, 29 Jul 2021 06:29:29 GMT&#xa;    Content-Length: 39&#xa;    Content-Type: text/plain; charset=US-ASCII&#xa;    Connection: Close&#xa;    valid protocol version: RTSP/1.0</elem>
+<elem key="SSLSessionReq">&#xa;    HTTP/1.0 400 Bad Request&#xa;    Date: Thu, 29 Jul 2021 06:29:45 GMT&#xa;    Content-Length: 73&#xa;    Content-Type: text/plain; charset=US-ASCII&#xa;    Connection: Close&#xa;    Invalid request line: &#xa;    ?G???,???`~?&#xa;    ??{????w????&lt;=?o?</elem>
+<elem key="TLSSessionReq">&#xa;    HTTP/1.0 400 Bad Request&#xa;    Date: Thu, 29 Jul 2021 06:29:45 GMT&#xa;    Content-Length: 71&#xa;    Content-Type: text/plain; charset=US-ASCII&#xa;    Connection: Close&#xa;    Invalid request line: &#xa;    ??random1random2random3random4</elem>
+<elem key="TerminalServerCookie">&#xa;    HTTP/1.0 400 Bad Request&#xa;    Date: Thu, 29 Jul 2021 06:29:45 GMT&#xa;    Content-Length: 54&#xa;    Content-Type: text/plain; charset=US-ASCII&#xa;    Connection: Close&#xa;    Invalid request line: &#xa;    Cookie: mstshash=nmap</elem>
+</script></port>
+<port protocol="tcp" portid="59777"><state state="open" reason="syn-ack" reason_ttl="63"/><service name="http" product="Bukkit JSONAPI httpd for Minecraft game server" version="3.6.0 or older" method="probed" conf="10"/><script id="http-title" output="Site doesn&apos;t have a title (text/plain)."></script></port>
+</ports>
+<times srtt="31025" rttvar="164" to="100000"/>
+</host>
+<taskbegin task="NSE" time="1627540318"/>
+<taskend task="NSE" time="1627540318"/>
+<taskbegin task="NSE" time="1627540318"/>
+<taskend task="NSE" time="1627540318"/>
+<taskbegin task="NSE" time="1627540318"/>
+<taskend task="NSE" time="1627540318"/>
+<runstats><finished time="1627540318" timestr="Thu Jul 29 08:31:58 2021" summary="Nmap done at Thu Jul 29 08:31:58 2021; 1 IP address (1 host up) scanned in 821.36 seconds" elapsed="821.36" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>

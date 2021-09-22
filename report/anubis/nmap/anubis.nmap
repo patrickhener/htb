@@ -1,0 +1,66 @@
+# Nmap 7.92 scan initiated Thu Aug 19 08:13:15 2021 as: nmap -sC -sV -oA nmap/anubis -vvv 10.10.11.102
+Nmap scan report for 10.10.11.102
+Host is up, received echo-reply ttl 127 (0.030s latency).
+Scanned at 2021-08-19 08:13:15 CEST for 58s
+Not shown: 996 filtered tcp ports (no-response)
+PORT    STATE SERVICE       REASON          VERSION
+135/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+443/tcp open  ssl/http      syn-ack ttl 126 Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+| ssl-cert: Subject: commonName=www.windcorp.htb
+| Subject Alternative Name: DNS:www.windcorp.htb
+| Issuer: commonName=www.windcorp.htb
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha256WithRSAEncryption
+| Not valid before: 2021-05-24T19:44:56
+| Not valid after:  2031-05-24T19:54:56
+| MD5:   e2e7 86ef 4095 9908 14c5 3347 cdcb 4167
+| SHA-1: 7fce 781f 883c a27e 1154 4502 1686 ee65 7551 0e2a
+| -----BEGIN CERTIFICATE-----
+| MIIDLTCCAhWgAwIBAgIQGTQcHTu8XrtFZ6hwEkAoKTANBgkqhkiG9w0BAQsFADAb
+| MRkwFwYDVQQDDBB3d3cud2luZGNvcnAuaHRiMB4XDTIxMDUyNDE5NDQ1NloXDTMx
+| MDUyNDE5NTQ1NlowGzEZMBcGA1UEAwwQd3d3LndpbmRjb3JwLmh0YjCCASIwDQYJ
+| KoZIhvcNAQEBBQADggEPADCCAQoCggEBAK79Y9DwPj7s4/vGfCx8Smiq921EsKI9
+| UQLB6ctOlXifp+YGwRKmDjPiRBsRaBcrQJyW8B3s8NKU1mt8dIX0bbn6gqBezeXg
+| cu+VXV/5HJmVQ5jxNe02NoY1l+5UBvmfpwRJmUvW+mO5dShhilDsNjPYYhydbme9
+| ap6UeFG7zwHfDKywUAFonbyxZcmFvaWUbbswNh0Hc0l7qAIddU8+O4azNNLzBgot
+| dstmd5PXMXtX4bdvupAV+PIhsu8ddsbSFAKxh7GLnmNDUv0/Jy1IQRfvpnjFNWAL
+| oeQzNmNnzCTNgoB9V7eAnPXCOLulq2geCaJ19WlYRrMc+lzIR/C4wB0CAwEAAaNt
+| MGswDgYDVR0PAQH/BAQDAgWgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcD
+| ATAbBgNVHREEFDASghB3d3cud2luZGNvcnAuaHRiMB0GA1UdDgQWBBQu0cbQ/zqK
+| aIeIy021WpVKOzBX8TANBgkqhkiG9w0BAQsFAAOCAQEAiyR1RyIWHuLR17cb45U+
+| 3rmflhQozUfNm1QMTGXQerX1s5p+Uw0rh7OdJe4VTE7smVPHiFJYzMlrvxl3p6Ur
+| UREF7ymW6NkriFZFSFKswHlWR9o5UwNG2QUAN8VjHBuOZT1LP8vgxRT290xh9G2w
+| i3Y3R5WA5FLYPYbNBJ7FZUbdMUkvQZI2DL9bd3ZLptqqlk/62kDrIRN2ctq8R6+c
+| C+h4MLd5L8Eoftf+5r1SrxTg3cD7ex2bm5cZmLhmtEYA6L1RkUPuf132Fb98URSE
+| +heFt1xpfM/EREhI+iwhFhTsDydrebtm9/HlxmDhd8OJqsFXmPWd6cw/llxONk9c
+| bA==
+|_-----END CERTIFICATE-----
+|_http-title: Not Found
+|_http-server-header: Microsoft-HTTPAPI/2.0
+| tls-alpn: 
+|_  http/1.1
+|_ssl-date: 2021-08-19T06:13:01+00:00; -1m12s from scanner time.
+445/tcp open  microsoft-ds? syn-ack ttl 127
+593/tcp open  ncacn_http    syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+| smb2-security-mode: 
+|   3.1.1: 
+|_    Message signing enabled and required
+| p2p-conficker: 
+|   Checking for Conficker.C or higher...
+|   Check 1 (port 38242/tcp): CLEAN (Timeout)
+|   Check 2 (port 29705/tcp): CLEAN (Timeout)
+|   Check 3 (port 30756/udp): CLEAN (Timeout)
+|   Check 4 (port 18491/udp): CLEAN (Timeout)
+|_  0/4 checks are positive: Host is CLEAN or ports are blocked
+| smb2-time: 
+|   date: 2021-08-19T06:12:23
+|_  start_date: N/A
+|_clock-skew: mean: -1m12s, deviation: 0s, median: -1m12s
+
+Read data files from: /usr/bin/../share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Thu Aug 19 08:14:13 2021 -- 1 IP address (1 host up) scanned in 58.15 seconds

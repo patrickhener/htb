@@ -1,0 +1,6 @@
+db:admin:118e48794631a9612484ca8b55f622d0
+cme:john:123456
+python:admin:ToughPasswordToCrack
+smb:kyle:ToughPasswordToCrack
+python-dbshell:pbkdf2_sha256$260000$wJO3ztk0fOlcbssnS1wJPD$bbTyCB8dYWMGYlz4dSArozTY7wcZCS7DV6l5dpuXM4A=:marcoantonio
+

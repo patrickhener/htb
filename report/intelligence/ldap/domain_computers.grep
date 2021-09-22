@@ -1,0 +1,3 @@
+cn	sAMAccountName	dNSHostName	operatingSystem	operatingSystemServicePack	operatingSystemVersion	lastLogon	userAccountControl	whenCreated	objectSid	description
+svc_int	svc_int$	svc_int.intelligence.htb				07/29/21 17:43:35	WORKSTATION_ACCOUNT, TRUSTED_TO_AUTH_FOR_DELEGATION	04/19/21 00:49:58	S-1-5-21-4210132550-3389855604-3437519686-1144	
+DC	DC$	dc.intelligence.htb	Windows Server 2019 Datacenter		10.0 (17763)	07/29/21 15:43:01	SERVER_TRUST_ACCOUNT, TRUSTED_FOR_DELEGATION	04/19/21 00:42:41	S-1-5-21-4210132550-3389855604-3437519686-1000	

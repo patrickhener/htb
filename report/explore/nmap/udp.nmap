@@ -1,0 +1,1 @@
+# Nmap 7.91 scan initiated Thu Jul 29 08:40:38 2021 as: nmap -Pn -p- -sU -oA nmap/udp -vvv --open 10.10.10.247

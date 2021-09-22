@@ -1,0 +1,5 @@
+# Nmap 7.91 scan initiated Thu Jul 29 08:18:16 2021 as: nmap -Pn -p- -sC -sV -oA nmap/explore -vvv 10.10.10.247
+# Ports scanned: TCP(65535;1-65535) UDP(0;) SCTP(0;) PROTOCOLS(0;)
+Host: 10.10.10.247 ()	Status: Up
+Host: 10.10.10.247 ()	Ports: 2222/open/tcp//ssh//(protocol 2.0)/, 5555/filtered/tcp//freeciv///, 42135/open/tcp//http//ES File Explorer Name Response httpd/, 44099/open/tcp//unknown///, 59777/open/tcp//http//Bukkit JSONAPI httpd for Minecraft game server 3.6.0 or older/	Ignored State: closed (65530)
+# Nmap done at Thu Jul 29 08:31:58 2021 -- 1 IP address (1 host up) scanned in 821.36 seconds

@@ -1,0 +1,2 @@
+distinguishedName	lockOutObservationWindow	lockoutDuration	lockoutThreshold	maxPwdAge	minPwdAge	minPwdLength	pwdHistoryLength	pwdProperties	ms-DS-MachineAccountQuota
+DC=intelligence,DC=htb	0.0 minutes	0.0 minutes	0	1000000000.00 days	0.00 days	7	0		10

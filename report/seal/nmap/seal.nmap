@@ -1,0 +1,145 @@
+# Nmap 7.91 scan initiated Fri Jul 30 08:27:24 2021 as: nmap -sC -sV -oA nmap/seal -vvv 10.10.10.250
+Nmap scan report for 10.10.10.250
+Host is up, received echo-reply ttl 63 (0.058s latency).
+Scanned at 2021-07-30 08:27:25 CEST for 17s
+Not shown: 997 closed ports
+Reason: 997 resets
+PORT     STATE SERVICE    REASON         VERSION
+22/tcp   open  ssh        syn-ack ttl 63 OpenSSH 8.2p1 Ubuntu 4ubuntu0.2 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   3072 4b:89:47:39:67:3d:07:31:5e:3f:4c:27:41:1f:f9:67 (RSA)
+| ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC1FohcrXkoPYUOtmzAh5PlCU2H0+sFcGl6XXS6vX2lLJ3RD2Vd+KlcYtc2wQLjcYJhkFe793jmkogOSh0uI+fKQA9z1Ib3J0vtsIaNkXxvSMPcr54QxXgg1guaM1OQl43ePUADXnB6WqAg8QyF6Nxoa18vboOAu3a8Wn9Qf9iCpoU93d5zQj+FsBKVaDs3zuJkUBRfjsqq7rEMpxqCfkFIeUrJF9MBsQhgsEVUbo1zicWG32m49PgDbKr9yE3lPsV9K4b9ugNQ3zwWW5a1OpOs+r3AxFcu2q65N2znV3/p41ul9+fWXo9pm0jJPJ3V5gZphDkXVZEw16K2hcgQcQJUH7luaVTRpzqDxXaiK/8wChtMXEUjFQKL6snEskkRxCg+uLO6HjI19dJ7sTBUkjdMK58TM5RmK8EO1VvbCAAdlMs8G064pSFKxY/iQjp7VWuaqBUetpplESpIe6Bz+tOyTJ8ZyhkJimFG80iHoKWYI2TOa5FdlXod1NvTIkCLD2U=
+|   256 04:a7:4f:39:95:65:c5:b0:8d:d5:49:2e:d8:44:00:36 (ECDSA)
+| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBD+SiHX7ZTaXWFgBUKSVlFmMYtqF7Ihjfdc51aEdxFdB3xnRWVYSJd2JhOX1k/9V62eZMhR/4Lc8pJWQJHdSA/c=
+|   256 b4:5e:83:93:c5:42:49:de:71:25:92:71:23:b1:85:54 (ED25519)
+|_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMXLlJgua8pjAw5NcWgGDwXoASfUOqUlpeQxd66seKyT
+443/tcp  open  ssl/http   syn-ack ttl 63 nginx 1.18.0 (Ubuntu)
+| http-methods: 
+|_  Supported Methods: OPTIONS GET HEAD POST
+|_http-server-header: nginx/1.18.0 (Ubuntu)
+|_http-title: Seal Market
+| ssl-cert: Subject: commonName=seal.htb/organizationName=Seal Pvt Ltd/stateOrProvinceName=London/countryName=UK/organizationalUnitName=Infra/emailAddress=admin@seal.htb/localityName=Hackney
+| Issuer: commonName=seal.htb/organizationName=Seal Pvt Ltd/stateOrProvinceName=London/countryName=UK/organizationalUnitName=Infra/emailAddress=admin@seal.htb/localityName=hackney
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha256WithRSAEncryption
+| Not valid before: 2021-05-05T10:24:03
+| Not valid after:  2022-05-05T10:24:03
+| MD5:   9c4f 991a bb97 192c df5a c513 057d 4d21
+| SHA-1: 0de4 6873 0ab7 3f90 c317 0f7b 872f 155b 305e 54ef
+| -----BEGIN CERTIFICATE-----
+| MIIDiDCCAnACAWQwDQYJKoZIhvcNAQELBQAwgYkxCzAJBgNVBAYTAlVLMQ8wDQYD
+| VQQIDAZMb25kb24xEDAOBgNVBAcMB2hhY2tuZXkxFTATBgNVBAoMDFNlYWwgUHZ0
+| IEx0ZDEOMAwGA1UECwwFSW5mcmExETAPBgNVBAMMCHNlYWwuaHRiMR0wGwYJKoZI
+| hvcNAQkBFg5hZG1pbkBzZWFsLmh0YjAeFw0yMTA1MDUxMDI0MDNaFw0yMjA1MDUx
+| MDI0MDNaMIGJMQswCQYDVQQGEwJVSzEPMA0GA1UECAwGTG9uZG9uMRAwDgYDVQQH
+| DAdIYWNrbmV5MRUwEwYDVQQKDAxTZWFsIFB2dCBMdGQxDjAMBgNVBAsMBUluZnJh
+| MREwDwYDVQQDDAhzZWFsLmh0YjEdMBsGCSqGSIb3DQEJARYOYWRtaW5Ac2VhbC5o
+| dGIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDafbynnscdjWeuXTrD
+| M36rTJ0y2pJpDDFe9ngryz/xw1KsoPfEDrDE0XHc8LVlD9cxXd/8+0feeV34d63s
+| YyZ0t5tHlAKw1h9TEa/og1yR1MyxZRf+K/wcX+OwXYFtMHkXCZFH7TPXLKtCrMJM
+| Z6GCt3f1ccrI10D+/dMo7eyQJsat/1e+6PgrTWRxImcjOCDOZ1+mlfSkvmr5TUBW
+| SU3uil2Qo5Kj9YLCPisjKpVuyhHU6zZ5KuBXkudaPS0LuWQW1LTMyJzlRfoIi9J7
+| E2uUQglrTKKyd3g4BhWUABbwyxoj2WBbgvVIdCGmg6l8JPRZXwdLaPZ/FbHEQ47n
+| YpmtAgMBAAEwDQYJKoZIhvcNAQELBQADggEBAJZGFznhRSEa2DTgevXl1T8uxpiG
+| PPd9R0whiIv3s225ir9SWW3Hl1tVkEY75G4PJA/DxmBIHxIK1OU8kZMuJUevnSIC
+| rK16b9Y5Y1JEnaQwfKCoQILMU40ED76ZIJigGqAoniGCim/mwR1F1r1g63oUttDT
+| aGLrpvN6XVkqSszpxTMMHk3SqwNaKzsaPKWPGuEbj9GGntRo1ysqZfBttgUMFIzl
+| 7un7bBMIn+SPFosNGBmXIU9eyR7zG+TmpGYvTgsw0ZJqZL9yQIcszJQZPV3HuLJ8
+| 8srMeWYlzSS1SOWrohny4ov8jpMjWkbdnDNGRMXIUpapho1R82hyP7WEfwc=
+|_-----END CERTIFICATE-----
+| tls-alpn: 
+|_  http/1.1
+| tls-nextprotoneg: 
+|_  http/1.1
+8080/tcp open  http-proxy syn-ack ttl 63
+| fingerprint-strings: 
+|   FourOhFourRequest: 
+|     HTTP/1.1 401 Unauthorized
+|     Date: Fri, 30 Jul 2021 06:26:35 GMT
+|     Set-Cookie: JSESSIONID=node05hjbh23s68x63lb9y0srovrp23609.node0; Path=/; HttpOnly
+|     Expires: Thu, 01 Jan 1970 00:00:00 GMT
+|     Content-Type: text/html;charset=utf-8
+|     Content-Length: 0
+|   GetRequest: 
+|     HTTP/1.1 401 Unauthorized
+|     Date: Fri, 30 Jul 2021 06:26:35 GMT
+|     Set-Cookie: JSESSIONID=node01f40j390snw70czwu3dad4d7w23607.node0; Path=/; HttpOnly
+|     Expires: Thu, 01 Jan 1970 00:00:00 GMT
+|     Content-Type: text/html;charset=utf-8
+|     Content-Length: 0
+|   HTTPOptions: 
+|     HTTP/1.1 200 OK
+|     Date: Fri, 30 Jul 2021 06:26:35 GMT
+|     Set-Cookie: JSESSIONID=node01vyh0d3ibe4jj2d2tns53uo7z23608.node0; Path=/; HttpOnly
+|     Expires: Thu, 01 Jan 1970 00:00:00 GMT
+|     Content-Type: text/html;charset=utf-8
+|     Allow: GET,HEAD,POST,OPTIONS
+|     Content-Length: 0
+|   RPCCheck: 
+|     HTTP/1.1 400 Illegal character OTEXT=0x80
+|     Content-Type: text/html;charset=iso-8859-1
+|     Content-Length: 71
+|     Connection: close
+|     <h1>Bad Message 400</h1><pre>reason: Illegal character OTEXT=0x80</pre>
+|   RTSPRequest: 
+|     HTTP/1.1 505 Unknown Version
+|     Content-Type: text/html;charset=iso-8859-1
+|     Content-Length: 58
+|     Connection: close
+|     <h1>Bad Message 505</h1><pre>reason: Unknown Version</pre>
+|   Socks4: 
+|     HTTP/1.1 400 Illegal character CNTL=0x4
+|     Content-Type: text/html;charset=iso-8859-1
+|     Content-Length: 69
+|     Connection: close
+|     <h1>Bad Message 400</h1><pre>reason: Illegal character CNTL=0x4</pre>
+|   Socks5: 
+|     HTTP/1.1 400 Illegal character CNTL=0x5
+|     Content-Type: text/html;charset=iso-8859-1
+|     Content-Length: 69
+|     Connection: close
+|_    <h1>Bad Message 400</h1><pre>reason: Illegal character CNTL=0x5</pre>
+| http-auth: 
+| HTTP/1.1 401 Unauthorized\x0D
+|_  Server returned status 401 but no WWW-Authenticate header.
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-title: Site doesn't have a title (text/html;charset=utf-8).
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port8080-TCP:V=7.91%I=7%D=7/30%Time=61039BD5%P=x86_64-unknown-linux-gnu
+SF:%r(GetRequest,F8,"HTTP/1\.1\x20401\x20Unauthorized\r\nDate:\x20Fri,\x20
+SF:30\x20Jul\x202021\x2006:26:35\x20GMT\r\nSet-Cookie:\x20JSESSIONID=node0
+SF:1f40j390snw70czwu3dad4d7w23607\.node0;\x20Path=/;\x20HttpOnly\r\nExpire
+SF:s:\x20Thu,\x2001\x20Jan\x201970\x2000:00:00\x20GMT\r\nContent-Type:\x20
+SF:text/html;charset=utf-8\r\nContent-Length:\x200\r\n\r\n")%r(HTTPOptions
+SF:,10C,"HTTP/1\.1\x20200\x20OK\r\nDate:\x20Fri,\x2030\x20Jul\x202021\x200
+SF:6:26:35\x20GMT\r\nSet-Cookie:\x20JSESSIONID=node01vyh0d3ibe4jj2d2tns53u
+SF:o7z23608\.node0;\x20Path=/;\x20HttpOnly\r\nExpires:\x20Thu,\x2001\x20Ja
+SF:n\x201970\x2000:00:00\x20GMT\r\nContent-Type:\x20text/html;charset=utf-
+SF:8\r\nAllow:\x20GET,HEAD,POST,OPTIONS\r\nContent-Length:\x200\r\n\r\n")%
+SF:r(RTSPRequest,AD,"HTTP/1\.1\x20505\x20Unknown\x20Version\r\nContent-Typ
+SF:e:\x20text/html;charset=iso-8859-1\r\nContent-Length:\x2058\r\nConnecti
+SF:on:\x20close\r\n\r\n<h1>Bad\x20Message\x20505</h1><pre>reason:\x20Unkno
+SF:wn\x20Version</pre>")%r(FourOhFourRequest,F7,"HTTP/1\.1\x20401\x20Unaut
+SF:horized\r\nDate:\x20Fri,\x2030\x20Jul\x202021\x2006:26:35\x20GMT\r\nSet
+SF:-Cookie:\x20JSESSIONID=node05hjbh23s68x63lb9y0srovrp23609\.node0;\x20Pa
+SF:th=/;\x20HttpOnly\r\nExpires:\x20Thu,\x2001\x20Jan\x201970\x2000:00:00\
+SF:x20GMT\r\nContent-Type:\x20text/html;charset=utf-8\r\nContent-Length:\x
+SF:200\r\n\r\n")%r(Socks5,C3,"HTTP/1\.1\x20400\x20Illegal\x20character\x20
+SF:CNTL=0x5\r\nContent-Type:\x20text/html;charset=iso-8859-1\r\nContent-Le
+SF:ngth:\x2069\r\nConnection:\x20close\r\n\r\n<h1>Bad\x20Message\x20400</h
+SF:1><pre>reason:\x20Illegal\x20character\x20CNTL=0x5</pre>")%r(Socks4,C3,
+SF:"HTTP/1\.1\x20400\x20Illegal\x20character\x20CNTL=0x4\r\nContent-Type:\
+SF:x20text/html;charset=iso-8859-1\r\nContent-Length:\x2069\r\nConnection:
+SF:\x20close\r\n\r\n<h1>Bad\x20Message\x20400</h1><pre>reason:\x20Illegal\
+SF:x20character\x20CNTL=0x4</pre>")%r(RPCCheck,C7,"HTTP/1\.1\x20400\x20Ill
+SF:egal\x20character\x20OTEXT=0x80\r\nContent-Type:\x20text/html;charset=i
+SF:so-8859-1\r\nContent-Length:\x2071\r\nConnection:\x20close\r\n\r\n<h1>B
+SF:ad\x20Message\x20400</h1><pre>reason:\x20Illegal\x20character\x20OTEXT=
+SF:0x80</pre>");
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Read data files from: /usr/bin/../share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Fri Jul 30 08:27:42 2021 -- 1 IP address (1 host up) scanned in 17.91 seconds

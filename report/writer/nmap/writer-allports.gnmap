@@ -1,0 +1,5 @@
+# Nmap 7.91 scan initiated Tue Aug  3 14:06:07 2021 as: nmap -p- -sV -sC -oA nmap/writer-allports -vvv 10.129.100.209
+# Ports scanned: TCP(65535;1-65535) UDP(0;) SCTP(0;) PROTOCOLS(0;)
+Host: 10.129.100.209 (writer.htb)	Status: Up
+Host: 10.129.100.209 (writer.htb)	Ports: 22/open/tcp//ssh//OpenSSH 8.2p1 Ubuntu 4ubuntu0.2 (Ubuntu Linux; protocol 2.0)/, 80/open/tcp//http//Apache httpd 2.4.41 ((Ubuntu))/, 139/open/tcp//netbios-ssn//Samba smbd 4.6.2/, 445/open/tcp//netbios-ssn//Samba smbd 4.6.2/	Ignored State: closed (65531)
+# Nmap done at Tue Aug  3 14:06:54 2021 -- 1 IP address (1 host up) scanned in 46.77 seconds

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.92 scan initiated Thu Aug 19 08:21:14 2021 as: nmap -p- -sC -sV -oA nmap/anubis-allports 10.10.11.102 -->
+<nmaprun scanner="nmap" args="nmap -p- -sC -sV -oA nmap/anubis-allports 10.10.11.102" start="1629354074" startstr="Thu Aug 19 08:21:14 2021" version="7.92" xmloutputversion="1.05">
+<scaninfo type="syn" protocol="tcp" numservices="65535" services="1-65535"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<hosthint><status state="up" reason="unknown-response" reason_ttl="0"/>
+<address addr="10.10.11.102" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<host starttime="1629354074" endtime="1629354274"><status state="up" reason="echo-reply" reason_ttl="127"/>
+<address addr="10.10.11.102" addrtype="ipv4"/>
+<hostnames>
+<hostname name="windcorp.htb" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65530">
+<extrareasons reason="no-response" count="65530" proto="tcp" ports="1-134,136-442,444,446-592,594-49707,49709-65535"/>
+</extraports>
+<port protocol="tcp" portid="135"><state state="open" reason="syn-ack" reason_ttl="127"/><service name="msrpc" product="Microsoft Windows RPC" ostype="Windows" method="probed" conf="10"><cpe>cpe:/o:microsoft:windows</cpe></service></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="126"/><service name="http" product="Microsoft HTTPAPI httpd" version="2.0" extrainfo="SSDP/UPnP" ostype="Windows" tunnel="ssl" method="probed" conf="10"><cpe>cpe:/o:microsoft:windows</cpe></service><script id="http-title" output="Not Found"><elem key="title">Not Found</elem>
+</script><script id="http-server-header" output="Microsoft-HTTPAPI/2.0"><elem>Microsoft-HTTPAPI/2.0</elem>
+</script><script id="ssl-cert" output="Subject: commonName=www.windcorp.htb&#xa;Subject Alternative Name: DNS:www.windcorp.htb&#xa;Not valid before: 2021-05-24T19:44:56&#xa;Not valid after:  2031-05-24T19:54:56"><table key="subject">
+<elem key="commonName">www.windcorp.htb</elem>
+</table>
+<table key="issuer">
+<elem key="commonName">www.windcorp.htb</elem>
+</table>
+<table key="pubkey">
+<elem key="type">rsa</elem>
+<elem key="bits">2048</elem>
+<elem key="modulus">AEFD63D0F03E3EECE3FBC67C2C7C4A68AAF76D44B0A23D5102C1E9CB4E95789FA7E606C112A60E33E2441B1168172B409C96F01DECF0D294D66B7C7485F46DB9FA82A05ECDE5E072EF955D5FF91C99954398F135ED3636863597EE5406F99FA70449994BD6FA63B97528618A50EC3633D8621C9D6E67BD6A9E947851BBCF01DF0CACB05001689DBCB165C985BDA5946DBB30361D0773497BA8021D754F3E3B86B334D2F3060A2D76CB667793D7317B57E1B76FBA9015F8F221B2EF1D76C6D21402B187B18B9E634352FD3F272D484117EFA678C535600BA1E433366367CC24CD82807D57B7809CF5C238BBA5AB681E09A275F5695846B31CFA5CC847F0B8C01D</elem>
+<elem key="exponent">65537</elem>
+</table>
+<table key="extensions">
+<table>
+<elem key="name">X509v3 Key Usage</elem>
+<elem key="value">Digital Signature, Key Encipherment</elem>
+<elem key="critical">true</elem>
+</table>
+<table>
+<elem key="name">X509v3 Extended Key Usage</elem>
+<elem key="value">TLS Web Client Authentication, TLS Web Server Authentication</elem>
+</table>
+<table>
+<elem key="name">X509v3 Subject Alternative Name</elem>
+<elem key="value">DNS:www.windcorp.htb</elem>
+</table>
+<table>
+<elem key="name">X509v3 Subject Key Identifier</elem>
+<elem key="value">2E:D1:C6:D0:FF:3A:8A:68:87:88:CB:4D:B5:5A:95:4A:3B:30:57:F1</elem>
+</table>
+</table>
+<elem key="sig_algo">sha256WithRSAEncryption</elem>
+<table key="validity">
+<elem key="notBefore">2021-05-24T19:44:56</elem>
+<elem key="notAfter">2031-05-24T19:54:56</elem>
+</table>
+<elem key="md5">e2e786ef4095990814c53347cdcb4167</elem>
+<elem key="sha1">7fce781f883ca27e115445021686ee6575510e2a</elem>
+<elem key="pem">-&#45;&#45;&#45;&#45;BEGIN CERTIFICATE-&#45;&#45;&#45;&#45;&#xa;MIIDLTCCAhWgAwIBAgIQGTQcHTu8XrtFZ6hwEkAoKTANBgkqhkiG9w0BAQsFADAb&#xa;MRkwFwYDVQQDDBB3d3cud2luZGNvcnAuaHRiMB4XDTIxMDUyNDE5NDQ1NloXDTMx&#xa;MDUyNDE5NTQ1NlowGzEZMBcGA1UEAwwQd3d3LndpbmRjb3JwLmh0YjCCASIwDQYJ&#xa;KoZIhvcNAQEBBQADggEPADCCAQoCggEBAK79Y9DwPj7s4/vGfCx8Smiq921EsKI9&#xa;UQLB6ctOlXifp+YGwRKmDjPiRBsRaBcrQJyW8B3s8NKU1mt8dIX0bbn6gqBezeXg&#xa;cu+VXV/5HJmVQ5jxNe02NoY1l+5UBvmfpwRJmUvW+mO5dShhilDsNjPYYhydbme9&#xa;ap6UeFG7zwHfDKywUAFonbyxZcmFvaWUbbswNh0Hc0l7qAIddU8+O4azNNLzBgot&#xa;dstmd5PXMXtX4bdvupAV+PIhsu8ddsbSFAKxh7GLnmNDUv0/Jy1IQRfvpnjFNWAL&#xa;oeQzNmNnzCTNgoB9V7eAnPXCOLulq2geCaJ19WlYRrMc+lzIR/C4wB0CAwEAAaNt&#xa;MGswDgYDVR0PAQH/BAQDAgWgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcD&#xa;ATAbBgNVHREEFDASghB3d3cud2luZGNvcnAuaHRiMB0GA1UdDgQWBBQu0cbQ/zqK&#xa;aIeIy021WpVKOzBX8TANBgkqhkiG9w0BAQsFAAOCAQEAiyR1RyIWHuLR17cb45U+&#xa;3rmflhQozUfNm1QMTGXQerX1s5p+Uw0rh7OdJe4VTE7smVPHiFJYzMlrvxl3p6Ur&#xa;UREF7ymW6NkriFZFSFKswHlWR9o5UwNG2QUAN8VjHBuOZT1LP8vgxRT290xh9G2w&#xa;i3Y3R5WA5FLYPYbNBJ7FZUbdMUkvQZI2DL9bd3ZLptqqlk/62kDrIRN2ctq8R6+c&#xa;C+h4MLd5L8Eoftf+5r1SrxTg3cD7ex2bm5cZmLhmtEYA6L1RkUPuf132Fb98URSE&#xa;+heFt1xpfM/EREhI+iwhFhTsDydrebtm9/HlxmDhd8OJqsFXmPWd6cw/llxONk9c&#xa;bA==&#xa;-&#45;&#45;&#45;&#45;END CERTIFICATE-&#45;&#45;&#45;&#45;&#xa;</elem>
+</script><script id="ssl-date" output="2021-08-19T06:23:22+00:00; -1m12s from scanner time."><elem key="delta">-72.0</elem>
+<elem key="date">2021-08-19T06:23:22+00:00</elem>
+</script><script id="tls-alpn" output="&#xa;  http/1.1"><elem>http/1.1</elem>
+</script></port>
+<port protocol="tcp" portid="445"><state state="open" reason="syn-ack" reason_ttl="127"/><service name="microsoft-ds" method="table" conf="3"/></port>
+<port protocol="tcp" portid="593"><state state="open" reason="syn-ack" reason_ttl="127"/><service name="ncacn_http" product="Microsoft Windows RPC over HTTP" version="1.0" ostype="Windows" method="probed" conf="10"><cpe>cpe:/o:microsoft:windows</cpe></service></port>
+<port protocol="tcp" portid="49708"><state state="open" reason="syn-ack" reason_ttl="127"/><service name="msrpc" product="Microsoft Windows RPC" ostype="Windows" method="probed" conf="10"><cpe>cpe:/o:microsoft:windows</cpe></service></port>
+</ports>
+<hostscript><script id="smb2-security-mode" output="&#xa;  3.1.1: &#xa;    Message signing enabled and required"><table key="3.1.1">
+<elem>Message signing enabled and required</elem>
+</table>
+</script><script id="smb2-time" output="&#xa;  date: 2021-08-19T06:22:47&#xa;  start_date: N/A"><elem key="date">2021-08-19T06:22:47</elem>
+<elem key="start_date">N/A</elem>
+</script><script id="clock-skew" output="mean: -1m12s, deviation: 0s, median: -1m12s"><elem key="median">-72</elem>
+<elem key="count">2</elem>
+<elem key="stddev">0</elem>
+<elem key="mean">-72</elem>
+</script></hostscript><times srtt="31237" rttvar="1378" to="100000"/>
+</host>
+<runstats><finished time="1629354274" timestr="Thu Aug 19 08:24:34 2021" summary="Nmap done at Thu Aug 19 08:24:34 2021; 1 IP address (1 host up) scanned in 200.90 seconds" elapsed="200.90" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>

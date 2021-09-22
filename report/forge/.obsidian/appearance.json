@@ -1,0 +1,8 @@
+{
+  "baseFontSize": 16,
+  "cssTheme": "Obsidian Nord",
+  "theme": "obsidian",
+  "enabledCssSnippets": [
+    "myfont"
+  ]
+}

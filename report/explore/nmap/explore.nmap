@@ -1,0 +1,121 @@
+# Nmap 7.91 scan initiated Thu Jul 29 08:18:16 2021 as: nmap -Pn -p- -sC -sV -oA nmap/explore -vvv 10.10.10.247
+Increasing send delay for 10.10.10.247 from 0 to 5 due to 342 out of 1138 dropped probes since last increase.
+Nmap scan report for 10.10.10.247
+Host is up, received user-set (0.031s latency).
+Scanned at 2021-07-29 08:18:17 CEST for 821s
+Not shown: 65530 closed ports
+Reason: 65530 resets
+PORT      STATE    SERVICE REASON         VERSION
+2222/tcp  open     ssh     syn-ack ttl 63 (protocol 2.0)
+| fingerprint-strings: 
+|   NULL: 
+|_    SSH-2.0-SSH Server - Banana Studio
+| ssh-hostkey: 
+|   2048 71:90:e3:a7:c9:5d:83:66:34:88:3d:eb:b4:c7:88:fb (RSA)
+|_ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCqK2WZkEVE0CPTPpWoyDKZkHVrmffyDgcNNVK3PkamKs3M8tyqeFBivz4o8i9Ai8UlrVZ8mztI3qb+cHCdLMDpaO0ghf/50qYVGH4gU5vuVN0tbBJAR67ot4U+7WCcdh4sZHX5NNatyE36wpKj9t7n2XpEmIYda4CEIeUOy2Mm3Es+GD0AAUl8xG4uMYd2rdrJrrO1p15PO97/1ebsTH6SgFz3qjZvSirpom62WmmMbfRvJtNFiNJRydDpJvag2urk16GM9a0buF4h1JCGwMHxpSY05aKQLo8shdb9SxJRa9lMu3g2zgiDAmBCoKjsiPnuyWW+8G7Vz7X6nJC87KpL
+5555/tcp  filtered freeciv no-response
+42135/tcp open     http    syn-ack ttl 63 ES File Explorer Name Response httpd
+|_http-title: Site doesn't have a title (text/html).
+44099/tcp open     unknown syn-ack ttl 63
+| fingerprint-strings: 
+|   GenericLines: 
+|     HTTP/1.0 400 Bad Request
+|     Date: Thu, 29 Jul 2021 06:29:24 GMT
+|     Content-Length: 22
+|     Content-Type: text/plain; charset=US-ASCII
+|     Connection: Close
+|     Invalid request line:
+|   GetRequest: 
+|     HTTP/1.1 412 Precondition Failed
+|     Date: Thu, 29 Jul 2021 06:29:24 GMT
+|     Content-Length: 0
+|   HTTPOptions: 
+|     HTTP/1.0 501 Not Implemented
+|     Date: Thu, 29 Jul 2021 06:29:29 GMT
+|     Content-Length: 29
+|     Content-Type: text/plain; charset=US-ASCII
+|     Connection: Close
+|     Method not supported: OPTIONS
+|   Help: 
+|     HTTP/1.0 400 Bad Request
+|     Date: Thu, 29 Jul 2021 06:29:45 GMT
+|     Content-Length: 26
+|     Content-Type: text/plain; charset=US-ASCII
+|     Connection: Close
+|     Invalid request line: HELP
+|   RTSPRequest: 
+|     HTTP/1.0 400 Bad Request
+|     Date: Thu, 29 Jul 2021 06:29:29 GMT
+|     Content-Length: 39
+|     Content-Type: text/plain; charset=US-ASCII
+|     Connection: Close
+|     valid protocol version: RTSP/1.0
+|   SSLSessionReq: 
+|     HTTP/1.0 400 Bad Request
+|     Date: Thu, 29 Jul 2021 06:29:45 GMT
+|     Content-Length: 73
+|     Content-Type: text/plain; charset=US-ASCII
+|     Connection: Close
+|     Invalid request line: 
+|     ?G???,???`~?
+|     ??{????w????<=?o?
+|   TLSSessionReq: 
+|     HTTP/1.0 400 Bad Request
+|     Date: Thu, 29 Jul 2021 06:29:45 GMT
+|     Content-Length: 71
+|     Content-Type: text/plain; charset=US-ASCII
+|     Connection: Close
+|     Invalid request line: 
+|     ??random1random2random3random4
+|   TerminalServerCookie: 
+|     HTTP/1.0 400 Bad Request
+|     Date: Thu, 29 Jul 2021 06:29:45 GMT
+|     Content-Length: 54
+|     Content-Type: text/plain; charset=US-ASCII
+|     Connection: Close
+|     Invalid request line: 
+|_    Cookie: mstshash=nmap
+59777/tcp open     http    syn-ack ttl 63 Bukkit JSONAPI httpd for Minecraft game server 3.6.0 or older
+|_http-title: Site doesn't have a title (text/plain).
+2 services unrecognized despite returning data. If you know the service/version, please submit the following fingerprints at https://nmap.org/cgi-bin/submit.cgi?new-service :
+==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+SF-Port2222-TCP:V=7.91%I=7%D=7/29%Time=61024AFF%P=x86_64-unknown-linux-gnu
+SF:%r(NULL,24,"SSH-2\.0-SSH\x20Server\x20-\x20Banana\x20Studio\r\n");
+==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+SF-Port44099-TCP:V=7.91%I=7%D=7/29%Time=61024AFE%P=x86_64-unknown-linux-gn
+SF:u%r(GenericLines,AA,"HTTP/1\.0\x20400\x20Bad\x20Request\r\nDate:\x20Thu
+SF:,\x2029\x20Jul\x202021\x2006:29:24\x20GMT\r\nContent-Length:\x2022\r\nC
+SF:ontent-Type:\x20text/plain;\x20charset=US-ASCII\r\nConnection:\x20Close
+SF:\r\n\r\nInvalid\x20request\x20line:\x20")%r(GetRequest,5C,"HTTP/1\.1\x2
+SF:0412\x20Precondition\x20Failed\r\nDate:\x20Thu,\x2029\x20Jul\x202021\x2
+SF:006:29:24\x20GMT\r\nContent-Length:\x200\r\n\r\n")%r(HTTPOptions,B5,"HT
+SF:TP/1\.0\x20501\x20Not\x20Implemented\r\nDate:\x20Thu,\x2029\x20Jul\x202
+SF:021\x2006:29:29\x20GMT\r\nContent-Length:\x2029\r\nContent-Type:\x20tex
+SF:t/plain;\x20charset=US-ASCII\r\nConnection:\x20Close\r\n\r\nMethod\x20n
+SF:ot\x20supported:\x20OPTIONS")%r(RTSPRequest,BB,"HTTP/1\.0\x20400\x20Bad
+SF:\x20Request\r\nDate:\x20Thu,\x2029\x20Jul\x202021\x2006:29:29\x20GMT\r\
+SF:nContent-Length:\x2039\r\nContent-Type:\x20text/plain;\x20charset=US-AS
+SF:CII\r\nConnection:\x20Close\r\n\r\nNot\x20a\x20valid\x20protocol\x20ver
+SF:sion:\x20\x20RTSP/1\.0")%r(Help,AE,"HTTP/1\.0\x20400\x20Bad\x20Request\
+SF:r\nDate:\x20Thu,\x2029\x20Jul\x202021\x2006:29:45\x20GMT\r\nContent-Len
+SF:gth:\x2026\r\nContent-Type:\x20text/plain;\x20charset=US-ASCII\r\nConne
+SF:ction:\x20Close\r\n\r\nInvalid\x20request\x20line:\x20HELP")%r(SSLSessi
+SF:onReq,DD,"HTTP/1\.0\x20400\x20Bad\x20Request\r\nDate:\x20Thu,\x2029\x20
+SF:Jul\x202021\x2006:29:45\x20GMT\r\nContent-Length:\x2073\r\nContent-Type
+SF::\x20text/plain;\x20charset=US-ASCII\r\nConnection:\x20Close\r\n\r\nInv
+SF:alid\x20request\x20line:\x20\x16\x03\0\0S\x01\0\0O\x03\0\?G\?\?\?,\?\?\
+SF:?`~\?\0\?\?{\?\?\?\?w\?\?\?\?<=\?o\?\x10n\0\0\(\0\x16\0\x13\0")%r(Termi
+SF:nalServerCookie,CA,"HTTP/1\.0\x20400\x20Bad\x20Request\r\nDate:\x20Thu,
+SF:\x2029\x20Jul\x202021\x2006:29:45\x20GMT\r\nContent-Length:\x2054\r\nCo
+SF:ntent-Type:\x20text/plain;\x20charset=US-ASCII\r\nConnection:\x20Close\
+SF:r\n\r\nInvalid\x20request\x20line:\x20\x03\0\0\*%\?\0\0\0\0\0Cookie:\x2
+SF:0mstshash=nmap")%r(TLSSessionReq,DB,"HTTP/1\.0\x20400\x20Bad\x20Request
+SF:\r\nDate:\x20Thu,\x2029\x20Jul\x202021\x2006:29:45\x20GMT\r\nContent-Le
+SF:ngth:\x2071\r\nContent-Type:\x20text/plain;\x20charset=US-ASCII\r\nConn
+SF:ection:\x20Close\r\n\r\nInvalid\x20request\x20line:\x20\x16\x03\0\0i\x0
+SF:1\0\0e\x03\x03U\x1c\?\?random1random2random3random4\0\0\x0c\0/\0");
+Service Info: Device: phone
+
+Read data files from: /usr/bin/../share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Thu Jul 29 08:31:58 2021 -- 1 IP address (1 host up) scanned in 821.36 seconds

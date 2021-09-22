@@ -1,0 +1,7 @@
+CREATE USER admin WITH PASSWORD '1n$4N3lyH4rdP@ssw0rd!' WITH ALL PRIVILEGES;
+CREATE DATABASE devzat;
+CREATE RETENTION POLICY myretention ON devzat DURATION INF REPLICATION 1 DEFAULT;
+USE devzat;
+INSERT user enabled=false,password="WillyWonka2021",username="wilhelm"
+INSERT user enabled=true,password="woBeeYareedahc7Oogeephies7Aiseci",username="catherine"
+INSERT user enabled=true,password="RoyalQueenBee$",username="charles"
