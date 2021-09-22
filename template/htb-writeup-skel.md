@@ -1,20 +1,26 @@
 ---
 title: 'Hack The Box - Writeup'
-subtitle: 'Machine'
-author: 'Author Name Here'
+subtitle: 'Machine: %%machinename%%'
+author: 'Author: %%authorname%%'
 date: \today{}
 documentclass: scrartcl
-mainfont: Fira Code
-sansfont: Fira Code
-code-block-font-site: \scriptize
+caption-justification: centering
+mainfont: Source Code Pro
+mainfontoptions:
+- BoldFont=Source Code Pro Bold
+- ItalicFont=Source Code Pro Italic
+sansfont: Open Sans
+monofont: Fira Code
+code-block-font-site: \scriptsize
 titlepage: true
 titlepage-text-color: "FFFFFF"
-titlepage-color: "0c0d0e"
-titlepage-rule-color: "8ac53e"
+titlepage-rule-color: "9fef00"
+titlepage-rule-height: 6
+titlepage-background: "assets/htbback.pdf"
 logo: "assets/badge.png"
 logo-width: 250pt
-header-left: 'Machine'
-footer-left: 'Author Name Here'
+header-left: '%%machinename%%'
+footer-left: '%%authorname%%'
 footer-right: 'Page \thepage'
 ---
 
@@ -26,3 +32,12 @@ footer-right: 'Page \thepage'
 <!-- Latex foo ends -->
 
 # Overview
+| Name | IP | Difficulty |
+| --- | --- | --- |
+| %%machinename%% | | |
+
+# Recon
+
+# Foothold
+
+# Privilege Escalation

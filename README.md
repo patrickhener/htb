@@ -31,6 +31,14 @@ Beispiel: klont ihr das Repo nach /home/user/htb, dann ist das euer $HTBDIR und 
 Unter Arch bekomme ich _pandoc_ und texlive über das repo.
 Eisvogel template findet man hier: [Eisvogel Latex](https://github.com/Wandmalfarbe/pandoc-latex-template/releases/latest)
 
+## Schriftarten
+
+Verwendet werden:
+
+- Fira Code
+- Source Code Pro
+- Open Sans
+
 ## Framework app
 
 Die Framework app im Ordner _app_ ist in *go* geschrieben und kann mittels `make build` und `make install` gebaut und in den GOPATH verschoben werden.

