@@ -4,9 +4,6 @@ subtitle: 'Forge'
 author: 'c1sc0'
 date: \today{}
 documentclass: scrartcl
-pandoc-latex-color:
-  - classes: [command]
-    color: blue
 titlepage: true
 titlepage-text-color: "FFFFFF"
 titlepage-color: "0c0d0e"
@@ -39,11 +36,11 @@ PORT   STATE    SERVICE REASON         VERSION
 22/tcp open     ssh     syn-ack ttl 63 OpenSSH 8.2p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
 | ssh-hostkey: 
 |   3072 4f:78:65:66:29:e4:87:6b:3c:cc:b4:3a:d2:57:20:ac (RSA)
-| ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC2sK9Bs3bKpmIER8QElFzWVwM0V/pval09g7BOCYMOZihHpPeE4S2aCt0oe9/KHyALDgtRb3++WLuaI6tdYA1k4bhZU/0bPENKBp6ykWUsWieSSarmd0sfekrbcqob69pUJSxIVzLrzXbg4CWnnLh/UMLc3emGkXxjLOkR1APIZff3lXIDr8j2U3vDAwgbQINDinJaFTjDcXkOY57u4s2Si4XjJZnQVXuf8jGZxyyMKY/L/RYxRiZVhDGzEzEBxyLTgr5rHi3RF+mOtzn3s5oJvVSIZlh15h2qoJX1v7N/N5/7L1RR9rV3HZzDT+reKtdgUHEAKXRdfrff04hXy6aepQm+kb4zOJRiuzZSw6ml/N0ITJy/L6a88PJflpctPU4XKmVX5KxMasRKlRM4AMfzrcJaLgYYo1bVC9Ik+cCt7UjtvIwNZUcNMzFhxWFYFPhGVJ4HC0Cs2AuUC8T0LisZfysm61pLRUGP7ScPo5IJhwlMxncYgFzDrFRig3DlFQ0=
+| ssh-rsa AAAAB3NzaC1yc2EAAAADAQA...
 |   256 79:df:3a:f1:fe:87:4a:57:b0:fd:4e:d0:54:c6:28:d9 (ECDSA)
-| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBH67/BaxpvT3XsefC62xfP5fvtcKxG2J2di6u8wupaiDIPxABb5/S1qecyoQJYGGJJOHyKlVdqgF1Odf2hAA69Y=
+| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTI...
 |   256 b0:58:11:40:6d:8c:bd:c5:72:aa:83:08:c5:51:fb:33 (ED25519)
-|_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILcTSbyCdqkw29aShdKmVhnudyA2B6g6ULjspAQpHLIC
+|_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5A...
 80/tcp open     http    syn-ack ttl 63 Apache httpd 2.4.41 ((Ubuntu))
 |_http-title: Did not follow redirect to http://forge.htb
 |_http-server-header: Apache/2.4.41 (Ubuntu)
@@ -116,6 +113,8 @@ So adding it to `/etc/hosts` and again look at the resulting page.
 ## admin.forge.htb
 ![[Pasted image 20210922094923.png]]
 
-So the idea is to leverage a vulnerablity at the upload from URL part to look at `admin.forge.htb` from internally.
+So the idea is to leverage a vulnerablity at the upload from URL part to look at `admin.forge.htb` from within the internal network.
 
 ![[Pasted image 20210922095028.png]]
+
+It looks like it is blacklisted though

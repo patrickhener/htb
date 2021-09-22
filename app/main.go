@@ -35,11 +35,10 @@ func init() {
 		fmt.Print("You need to install pandoc for the framework to work.\nCheck the README.md\n")
 		os.Exit(0)
 	}
-	if yes := helper.CheckTool("pandoc-latex-color"); !yes {
-		fmt.Print("You need to install pandoc-latex-color for the framework to work.\nCheck the README.md\n")
+	if yes := helper.CheckTool("panrun"); !yes {
+		fmt.Print("You need to install panrun for the framework to work.\nCheck the README.md\n")
 		os.Exit(0)
 	}
-
 	if yes := helper.CheckTool("phantomjs"); !yes {
 		fmt.Println("Phantomjs is missing. Badge creation will not work")
 	}

@@ -46,8 +46,8 @@ func New(boxname, htbdir string) *Box {
 		htbdir:    htbdir,
 		lootdir:   path.Join(htbdir, "loot", boxname),
 		reportdir: path.Join(htbdir, "report", boxname),
-		imagedir:  path.Join(htbdir, "report", boxname, "images"),
-		badgejs:   path.Join(htbdir, "report", boxname, "images", "badge.js"),
+		imagedir:  path.Join(htbdir, "report", boxname, "assets"),
+		badgejs:   path.Join(htbdir, "report", boxname, "assets", "badge.js"),
 		pdf:       path.Join(htbdir, "report", boxname, fmt.Sprintf("%s-writeup.pdf", boxname)),
 		md:        path.Join(htbdir, "report", boxname, fmt.Sprintf("%s-writeup.md", boxname)),
 	}
@@ -102,13 +102,18 @@ func (box *Box) Create() error {
 			}
 
 			newContent := strings.Replace(string(read), "Machine", strings.Title(box.name), -1)
-			newContent = strings.Replace(string(newContent), "images/badge.png", fmt.Sprintf("%s/images/badge.png", box.reportdir), -1)
+			newContent = strings.Replace(string(newContent), "assets/badge.png", fmt.Sprintf("%s/assets/badge.png", box.reportdir), -1)
 			// If env HTBAUTHOR is there replace also the Author name
 			if htbauthor != "" {
 				newContent = strings.Replace(string(newContent), "Author Name Here", htbauthor, -1)
 			}
 			if err := ioutil.WriteFile(box.md, []byte(newContent), 0); err != nil {
 				return err
+			}
+
+			// Fetch Batch image
+			if err := fetchBatch(box); err != nil {
+				fmt.Printf("Error fetching the banner: %+v\n", err)
 			}
 
 			fmt.Printf("I cannot open the vault the first time. So be sure to open a folder as vault in obsidian and navigate it to: '%s'\n", box.reportdir)
@@ -147,12 +152,14 @@ func (box *Box) Edit() error {
 
 // Convert will convert markdown to pdf
 func (box *Box) Convert() error {
-	// Fetch Batch image
-	if err := fetchBatch(box); err != nil {
-		fmt.Printf("Error fetching the banner: %+v\n", err)
+	convert := []string{"pandoc", fmt.Sprintf("--resource-path=%s", box.reportdir), box.md, "--listings", "-H", "listings-setup.tex", "--pdf-engine=xelatex", "--template", "eisvogel", "-f", "markdown", "-t", "latex", "-s", "-o", box.pdf}
+
+	debug := os.Getenv("DEBUG")
+	if debug == "TRUE" {
+		fmt.Println(convert)
 	}
 
-	cmd := exec.Command("pandoc", fmt.Sprintf("--resource-path=%s", box.reportdir), box.md, "--listings", "-H", "listings-setup.tex", "--filter", "pandoc-latex-color", "--pdf-engine=xelatex", "--template", "eisvogel", "-f", "markdown", "-t", "latex", "-s", "-o", box.pdf)
+	cmd := exec.Command(convert[0], convert[1:]...)
 
 	stdoutStderror, err := cmd.CombinedOutput()
 	if err != nil {

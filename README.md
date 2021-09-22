@@ -23,13 +23,12 @@ Beispiel: klont ihr das Repo nach /home/user/htb, dann ist das euer $HTBDIR und 
 ## Requirements
 
 - pandoc
-- pandoc-latex-color
 - texlive
 - eisvogel latex template
 - phantomjs
 - obsidian
 
-Unter Arch bekomme ich _pandoc_ und texlive über das repo und _pandoc-latex-color_ kommt über pip.
+Unter Arch bekomme ich _pandoc_ und texlive über das repo.
 Eisvogel template findet man hier: [Eisvogel Latex](https://github.com/Wandmalfarbe/pandoc-latex-template/releases/latest)
 
 ## Framework app
