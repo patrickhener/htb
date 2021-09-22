@@ -52,15 +52,14 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ## /etc/hosts
 80 redirects to `forge.htb`. So adding it to `/etc/hosts`
 
-![[Pasted image 20210922093500.png]]
+![added forge.htb to /etc/hosts](etc_hosts.png)
 
 ## Website
-
-![[Pasted image 20210922093610.png]]
+![Website on port 80 for forge.htb](website.png)
 
 Interesting "Upload an image" button top right
 
-![[Pasted image 20210922094015.png]]
+![Upload image page](upload_image_button.png)
 
 Looks like you can either provide file or enter URL.
 
@@ -111,10 +110,10 @@ Requests/sec.: 0
 So adding it to `/etc/hosts` and again look at the resulting page.
 
 ## admin.forge.htb
-![[Pasted image 20210922094923.png]]
+![Only localhost is allowed](localhost_only.png)
 
 So the idea is to leverage a vulnerablity at the upload from URL part to look at `admin.forge.htb` from within the internal network.
 
-![[Pasted image 20210922095028.png]]
+![Blacklist is in place](blacklist.png)
 
 It looks like it is blacklisted though
