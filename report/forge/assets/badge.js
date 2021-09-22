@@ -1,7 +1,7 @@
 var fs = require('fs');
 var page = require('webpage').create();
 
-fs.changeWorkingDirectory("/home/patrick/htb/report/forge/images");
+fs.changeWorkingDirectory("/home/patrick/htb/report/forge/assets");
 
 page.viewportSize = { width: 660, height: 150 };
 page.zoomFactor = 3;
