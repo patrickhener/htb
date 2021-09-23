@@ -1,3 +1,3 @@
-module git.hener.eu/patrick/htb
+module github.com/patrickhener/htb
 
 go 1.16

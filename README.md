@@ -17,27 +17,16 @@ export HTBDIR="$HOME/htb"
 export HTBAUTHOR="C1sc0"
 export HTBPROFILEID="34604"
 ```
-
-Beispiel: klont ihr das Repo nach /home/user/htb, dann ist das euer $HTBDIR und die Unterordner _loot_, _report_, _app_ und _template_ liegen dann darunter.
+Beispiel: klont ihr das Repo nach /home/user/htb, dann ist das euer $HTBDIR und die Unterordner _loot_, _report_, und _app_ liegen dann darunter.
 
 ## Requirements
 
-- pandoc
 - texlive
-- eisvogel latex template
+- writeup latex style [github.com/patrickhener/writeup](https://github.com/patrickhener/writeup)
 - phantomjs
-- obsidian
+- VSCode (edit benutzt das)
 
-Unter Arch bekomme ich _pandoc_ und texlive über das repo.
-Eisvogel template findet man hier: [Eisvogel Latex](https://github.com/Wandmalfarbe/pandoc-latex-template/releases/latest)
-
-## Schriftarten
-
-Verwendet werden:
-
-- Fira Code
-- Source Code Pro
-- Open Sans
+Unter Arch bekomme ich texlive über das repo.
 
 ## Framework app
 
