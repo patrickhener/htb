@@ -153,7 +153,18 @@ func (box *Box) Edit() error {
 
 // Convert will convert markdown to pdf
 func (box *Box) Convert() error {
-	convert := []string{"pandoc", fmt.Sprintf("--resource-path=%s", box.reportdir), box.md, "--listings", "-H", "listings-setup.tex", "-V", "header-includes:'\\usepackage[export]{adjustbox} \\let\\includegraphicsbak\\includegraphics \\renewcommand*{\\includegraphics}[2][]{\\includegraphicsbak[frame,#1]{#2}}'", "--pdf-engine=xelatex", "--template", "eisvogel", "-f", "markdown", "-t", "latex", "-s", "-o", box.pdf}
+	convert := []string{
+		"pandoc",
+		fmt.Sprintf("--resource-path=%s", box.reportdir),
+		box.md, "--listings",
+		"-H", "listings-setup.tex",
+		"-V", "header-includes:\\usepackage[export]{adjustbox} \\let\\includegraphicsbak\\includegraphics \\renewcommand*{\\includegraphics}[2][]{\\includegraphicsbak[frame,#1]{#2}}",
+		"--pdf-engine=xelatex",
+		"--template", "eisvogel",
+		"-f", "markdown",
+		"-t", "latex",
+		"-s", "-o", box.pdf,
+	}
 
 	debug := os.Getenv("DEBUG")
 	if debug == "TRUE" {
