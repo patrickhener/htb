@@ -21,6 +21,14 @@ func main() {
 	var mode string = os.Args[1]
 	var reportdir string = path.Join(os.Getenv("HTBDIR"), "report")
 
+	// if mode is badge just update the badge.png
+	if mode == "badge" {
+		if err := helper.UpdateBadge(cfg); err != nil {
+			fmt.Printf("[-] Error updating badge: %+v\n", err)
+		}
+		os.Exit(0)
+	}
+
 	// if mode is list just list and exit
 	if mode == "list" {
 		if err := helper.List(reportdir); err != nil {

@@ -2,10 +2,13 @@ package helper
 
 import (
 	"bufio"
+	"encoding/base64"
 	"fmt"
 	"io"
 	"io/ioutil"
+	"net/http"
 	"os"
+	"os/exec"
 	"path"
 	"path/filepath"
 	"strings"
@@ -221,4 +224,95 @@ func CreateReportDir(reportdir, boxname, basetexfile, preambletexfile string, cf
 	}
 
 	return nil
+}
+
+/*
+func fetchBatch(box *Box) error {
+
+
+
+		// Now use phantomjs and badge.js to convert html to badge.png
+		cmd := exec.Command("phantomjs", box.badgejs)
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+
+		err = cmd.Start()
+		if err != nil {
+			return err
+		}
+}
+*/
+
+// UpdateBadge will fetch the html code from hackthebox.eu and then
+// generate a png out of it using phantomjs
+// It will copy it into 'writeup' Latex style image directory as the style
+// is using it in the front matter
+func UpdateBadge(cfg *config.Config) error {
+	if cfg.HTBProfileID != "" {
+		// Make http request to fetch batch raw response
+		resp, err := http.Get(fmt.Sprintf("https://www.hackthebox.eu/badge/%s", cfg.HTBProfileID))
+		if err != nil {
+			return err
+		}
+
+		// Read in body
+		rawBody, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+
+		// Trim left and right to extraxt pure base64 part
+		b64Body := strings.TrimPrefix(string(rawBody), "document.write(window.atob(\"")
+		b64Body = strings.TrimSuffix(b64Body, "\"))")
+
+		// Decode base64 to html
+		html, err := base64.StdEncoding.DecodeString(b64Body)
+		if err != nil {
+			return err
+		}
+
+		// Replace some things
+		htmlStr := strings.Replace(string(html), "<div ", "<div class=\"wrapper\" ", 1)
+		htmlStr = strings.ReplaceAll(htmlStr, "https://www.hackthebox.eu/images/screenshot.png", fmt.Sprintf("data:image/png;base64,%s", HTBCROSSHAIR))
+		htmlStr = strings.ReplaceAll(htmlStr, "_thumb.png", ".png")
+		htmlStr = strings.ReplaceAll(htmlStr, "https://www.hackthebox.eu/images/star.png", fmt.Sprintf("data:image/png;base64,%s", HTBSTAR))
+		htmlStr = strings.ReplaceAll(htmlStr, "url(https://www.hackthebox.eu/images/icon20.png);", fmt.Sprintf("url('data:image/webp;base64,%s'; background-size: 20px;", HTBLOGO))
+
+		// Make temp directory to operate in
+		tmpDir, err := ioutil.TempDir("", "htb")
+		if err != nil {
+			return err
+		}
+		defer os.RemoveAll(tmpDir)
+
+		// Write badge.html
+		if err := ioutil.WriteFile(path.Join(tmpDir, "badge.html"), []byte(htmlStr), 0755); err != nil {
+			return err
+		}
+
+		// Writing badge.js
+		badgeJs := strings.ReplaceAll(BADGEJS, "%%tmpdirhere%%", tmpDir)
+
+		if err := ioutil.WriteFile(path.Join(tmpDir, "badge.js"), []byte(badgeJs), 0755); err != nil {
+			return err
+		}
+
+		// Now use phantomjs and badge.js to convert html to badge.png
+		cmd := exec.Command("phantomjs", path.Join(tmpDir, "badge.js"))
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+
+		err = cmd.Run()
+		if err != nil {
+			return err
+		}
+
+		// Finally copy badge.png to /texmf/tex/latex/writeup/images
+		if err := CopyFile(path.Join(tmpDir, "badge.png"), path.Join(cfg.WriteupLatexPath, "images", "badge.png")); err != nil {
+			return err
+		}
+
+		return nil
+	}
+	return fmt.Errorf("%s", "HTBPROFILEID not set - no banner update")
 }

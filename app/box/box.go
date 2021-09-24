@@ -54,10 +54,14 @@ func (box *Box) Create() error {
 		return err
 	}
 
-	// // Fetch Batch image
-	// if err := fetchBatch(box); err != nil {
-	// 	fmt.Printf("Error fetching the banner: %+v\n", err)
-	// }
+	// Fetch Batch image
+	if err := helper.UpdateBadge(box.config); err != nil {
+		return err
+	}
+
+	// TODO? Maybe switch folder to report dir?
+	// Or maybe ask for direct edit?
+	// Maybe both?
 
 	return nil
 }
@@ -127,80 +131,3 @@ func (box *Box) Clear() error {
 
 	return nil
 }
-
-/*
-func fetchBatch(box *Box) error {
-	if htbprofileID != "" {
-		// Make http request to fetch batch raw response
-		resp, err := http.Get(fmt.Sprintf("https://www.hackthebox.eu/badge/%s", htbprofileID))
-		if err != nil {
-			return err
-		}
-
-		// Read in body
-		rawBody, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			return err
-		}
-
-		// Trim left and right to extraxt pure base64 part
-		b64Body := strings.TrimPrefix(string(rawBody), "document.write(window.atob(\"")
-		b64Body = strings.TrimSuffix(b64Body, "\"))")
-
-		// Decode base64 to html
-		html, err := base64.StdEncoding.DecodeString(b64Body)
-		if err != nil {
-			return err
-		}
-
-		// Replace some things
-		htmlStr := strings.Replace(string(html), "<div ", "<div class=\"wrapper\" ", 1)
-		htmlStr = strings.ReplaceAll(htmlStr, "https://www.hackthebox.eu/images/screenshot.png", fmt.Sprintf("data:image/png;base64,%s", htb_crosshair))
-		htmlStr = strings.ReplaceAll(htmlStr, "_thumb.png", ".png")
-		htmlStr = strings.ReplaceAll(htmlStr, "https://www.hackthebox.eu/images/star.png", fmt.Sprintf("data:image/png;base64,%s", htb_star))
-		htmlStr = strings.ReplaceAll(htmlStr, "url(https://www.hackthebox.eu/images/icon20.png);", fmt.Sprintf("url('data:image/webp;base64,%s'; background-size: 20px;", htb_logo))
-
-		// Create a empty file
-		file, err := os.Create(path.Join(box.imagedir, "badge.html"))
-		if err != nil {
-			return err
-		}
-		defer file.Close()
-
-		// Write the bytes to the file
-		_, err = file.WriteString(htmlStr)
-		if err != nil {
-			return err
-		}
-
-		// Flush
-		err = file.Sync()
-		if err != nil {
-			return err
-		}
-
-		// Insert report image dir as cwd into badge.js and replace it
-		read, err := ioutil.ReadFile(box.badgejs)
-		if err != nil {
-			return err
-		}
-
-		newBadgeJs := strings.ReplaceAll(string(read), "%%subcwdhere%%", box.imagedir)
-
-		if err := ioutil.WriteFile(box.badgejs, []byte(newBadgeJs), 0); err != nil {
-			return err
-		}
-
-		// Now use phantomjs and badge.js to convert html to badge.png
-		cmd := exec.Command("phantomjs", box.badgejs)
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
-
-		err = cmd.Start()
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-*/
