@@ -59,9 +59,15 @@ func (box *Box) Create() error {
 		return err
 	}
 
-	// TODO? Maybe switch folder to report dir?
-	// Or maybe ask for direct edit?
-	// Maybe both?
+	yes, err := helper.GrabYes("[*] Open the box to edit right away? [Y/n]")
+	if err != nil {
+		return err
+	}
+	if yes {
+		if err := box.Edit(); err != nil {
+			return err
+		}
+	}
 
 	return nil
 }

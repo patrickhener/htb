@@ -197,7 +197,7 @@ func CreateReportDir(reportdir, boxname, basetexfile, preambletexfile string, cf
 			if err := CopyDir(path.Join(cfg.WriteupLatexPath, "template"), reportdir); err != nil {
 				return err
 			}
-			fmt.Printf("Directory %+v created and template files copied over.\n", reportdir)
+			fmt.Println("[+] Template files copied over")
 
 			// Rename template report file
 			oldName := path.Join(reportdir, "report.tex")
