@@ -19,7 +19,7 @@ func main() {
 	}
 
 	var mode string = os.Args[1]
-	var reportdir string = path.Join(os.Getenv("HTBDIR"), "report")
+	var reportdir string = path.Join(os.Getenv("HTBDIR"), "writeup")
 
 	// if mode is badge just update the badge.png
 	if mode == "badge" {

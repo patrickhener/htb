@@ -33,7 +33,7 @@ func New(boxname string, cfg *config.Config) *Box {
 	}
 
 	box.lootdir = path.Join(box.htbdir, "loot", box.name)
-	box.reportdir = path.Join(box.htbdir, "report", box.name)
+	box.reportdir = path.Join(box.htbdir, "writeup", box.name)
 	box.baseTexFile = path.Join(box.reportdir, fmt.Sprintf("%s-writeup.tex", box.name))
 	box.preambleTexFile = path.Join(box.reportdir, "files", "preamble.tex")
 	box.writeupTexFile = path.Join(box.reportdir, "files", "writeup.tex")

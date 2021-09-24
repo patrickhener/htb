@@ -1,62 +1,57 @@
 # htb
 
-Hack The Box Report Writer Template und Scripte
+Hack The Box Framework for using 'writeup' Latex style.
 
 ## Installation
 
 `git clone git@git.syss.intern:phener/htb.git`
 
-- $HTBDIR definieren
-- optional: $HTBAUTHOR definieren
-- optional: $HTBPROFILEID definieren
+- define $HTBDIR
+- define $HTBAUTHOR
+- define $HTBPROFILEID
 
-Alles kann zum Beispiel in der .bashrc erledigt werden. Auszug aus meiner .bashrc:
+Can easily be done in a .bashrc for example:
 
 ```sh
 export HTBDIR="$HOME/htb"
-export HTBAUTHOR="C1sc0"
+export HTBAUTHOR="c1sc0"
 export HTBPROFILEID="34604"
 ```
-Beispiel: klont ihr das Repo nach /home/user/htb, dann ist das euer $HTBDIR und die Unterordner _loot_, _report_, und _app_ liegen dann darunter.
-
 ## Requirements
 
 - texlive
 - writeup latex style [github.com/patrickhener/writeup](https://github.com/patrickhener/writeup)
 - phantomjs
-- VSCode (edit benutzt das)
+- VSCode (edit mode calls 'code %s')
 
-Unter Arch bekomme ich texlive über das repo.
+## App
 
-## Framework app
+App can be found from folder _app_ and is written in *go*. One can build and install it via `make build` and `make install`.
 
-Die Framework app im Ordner _app_ ist in *go* geschrieben und kann mittels `make build` und `make install` gebaut und in den GOPATH verschoben werden.
-
-Die App kennt verschiedene Befehle:
+There are different modes:
 
 `htb <mode> <boxname>`
 
 ### Create
 
-Erstellt die Ordnerstruktur und kopiert das angepasste Template in den Report Ordner.
+This mode creates the folder structure for loot and for the writeup and copies over the template from `writeup` Latex style.
 
 ### Edit
 
-Öffnet die Markdown file mittels `xdg-open` zum Editieren in Obsidian. WICHTIG! - Man muss aktuell den Vault einmalig von Hand in Obsidian öffnen, da der Automatismus sonst nicht funktioniert.
-
-### Convert
-
-Erstellt aus der Markdown-Datei eine PDF-Datei.
+This mode opens the writeup path of the box in VSCode.
 
 ### Open
 
-Öffnet die erstellte PDF mittels `xdg-open`.
+This mode opens the boxes PDF via `xdg-open`.
 
 ### List
 
-Listet alle bereits erstellten Boxen auf.
+This mode lists all boxes in the writeup directory.
 
 ### Clear
 
-Löscht nach Rückfrage den loot und den report Ordner der Box.
+This mode deletes the corresponding loot and writeup folder of the box after asking.
 
+### Badge
+
+This mode updates your badge.png and copies it over to the 'writeup/images' folder. This will be run automatically everytime you are creating a box.
