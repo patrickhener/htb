@@ -1,6 +1,6 @@
 # htb
 
-Hack The Box Framework for using 'writeup' Latex style.
+Hack The Box Framework for using pandoc and custom latex style.
 
 ## Installation
 
@@ -17,10 +17,12 @@ export HTBDIR="$HOME/htb"
 export HTBAUTHOR="c1sc0"
 export HTBPROFILEID="34604"
 ```
+
+Copy over the `htb.latex` file from the repository to `~/.pandoc/templates/htb.latex`
 ## Requirements
 
+- pandoc
 - texlive
-- writeup latex style [github.com/patrickhener/writeup](https://github.com/patrickhener/writeup)
 - phantomjs
 - VSCode (edit mode calls 'code %s')
 
@@ -54,4 +56,8 @@ This mode deletes the corresponding loot and writeup folder of the box after ask
 
 ### Badge
 
-This mode updates your badge.png and copies it over to the 'writeup/images' folder. This will be run automatically everytime you are creating a box.
+This mode updates your badge.png and copies it over to the '$HTBDIR/badge' folder. This will be run automatically everytime you are creating a box.
+
+## Building the report
+
+Just simply issue the command `make` in the directory of the markdown file.
