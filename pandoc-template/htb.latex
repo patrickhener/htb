@@ -1,10 +1,22 @@
-\documentclass[noenddot,titlepage=false]{scrreprt}
+\documentclass[%
+  table,%
+  numbers=noenddot,%
+  titlepage=false,%
+  fontsize=11pt%
+]{scrreprt}
 
+\usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{fontenc}
 \usepackage[pagebackref=true,colorlinks=true,hidelinks,pdfencoding=auto]{hyperref}
 
-\usepackage{scrlayer-scrpage}
+% number the toc in pdf
+\RequirePackage[numbered]{bookmark}
+\bookmarksetup{
+  open,
+}
+
+\usepackage[automark]{scrlayer-scrpage}
 \pagestyle{scrheadings}
 
 \usepackage{tikz}
@@ -76,7 +88,7 @@
 
 % Uppercase-ß suport and MakeUppercase
 \uccode`ß="1E9E
-
+  % \tableofcontents
 % Change default font
 \renewcommand\familydefault{\sfdefault} % sans
 
@@ -93,24 +105,20 @@
   textheight=241mm,
   ratio=1:1,
   headsep=5mm,
-  footskip=15mm
+  footskip=25mm
 }
 
 % Custom pagestyle
 \usepackage{mdframed} % for listings
 \usepackage{lastpage}
-\usepackage{tocloft} % custom font in TOC
+\usepackage[titles]{tocloft} % custom font in TOC
 \usepackage{eso-pic}
 \usepackage{ifthen}
-
-% Chapter to begin with 1 instead of 0
-\renewcommand{\thesection}{\arabic{section}}
 
 % Koma options
 % seperators for header/footer
 \KOMAoptions{headsepline=1pt}
 \KOMAoptions{footsepline=false}
-\KOMAoption{chapterentrydots}{false}
 \renewcommand{\headfont}{\color{htb-green}\normalfont\slshape}
 \setlength{\footheight}{32.0pt}
 
@@ -140,7 +148,7 @@
 
 % automatic chapter numbers with sections
 \automark[chapter]{chapter}
-\automark*[section]{section}
+\automark*[section]{}
 
 % fonts
 \setkomafont{pagehead}{\normalfont\sffamily\bfseries\footnotesize}
@@ -150,7 +158,7 @@
 \newpairofpagestyles{wudefault}{%
   \rohead{\color{htb-black}\small Author: $author$}
   \lohead{\color{htb-black}\small $title$ - $subtitle$ | \color{htb-grey}\headmark}
-  \rofoot{\color{htb-black} \normalsize\textbf{\thepage{}/\thesecondlastpage{}}}
+  \rofoot{\color{white}\normalsize\textbf{\thepage{}/\thesecondlastpage{}}}
 }
 \pagestyle{wudefault}
 
@@ -165,6 +173,10 @@
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 
+% Force images to always be at the place where you add them
+\usepackage{float}
+\floatplacement{figure}{H}
+
 % compactitem
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
@@ -174,6 +186,7 @@
 $if(highlighting-macros)$
 $highlighting-macros$
 $endif$
+
 
 % Listings
 \usepackage{listings}
@@ -314,9 +327,9 @@ $endif$
 \usepackage{colortbl}
 \usepackage[hypcap=false]{caption}
 
-\captionsetup{width=0.8\textwidth}
-\keepXColumns % compactitem in tabularx
-
+\setlength{\aboverulesep}{0pt}
+\setlength{\belowrulesep}{0pt}
+\renewcommand{\arraystretch}{1.3}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -360,6 +373,9 @@ $endif$
   \end{titlepage}
   \clearpage
 
+  % Page background on every page after titlepage
+  \AddToShipoutPictureBG{\includegraphics[width=\paperwidth,height=\paperheight]{assets/pageback.png}}
+
   %% Table of Contents
   \renewcommand*\contentsname{Contents}
   \setcounter{secnumdepth}{4}
@@ -375,4 +391,27 @@ $endif$
   %% Body from markdown
   $body$
 
+  \cleardoublepage
+
+  % Last page
+  \pagestyle{empty}
+  \noindent
+
+  % background
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[inner sep=0] at (current page){\includegraphics[width=\paperwidth,height=\paperheight]{assets/titlepageback.png}};
+    \node[inner sep=0, yshift=5em, xshift=-17em] at (current page.south east){\IfFileExists{assets/badge.png}{\includegraphics[width=.7\textwidth]{assets/badge.png}}{}};
+  \end{tikzpicture}
+
+  \vspace{4em}
+
+  \begin{flushleft}
+      \Huge \color{white} \textbf{Thanks for reading...}
+  \end{flushleft}
+
+  \vspace{4em}
+
+  \begin{flushleft}
+      \LARGE \color{white} \texttt{\bfhtbgreen{$author$}}
+  \end{flushleft}
 \end{document}

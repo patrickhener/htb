@@ -7,6 +7,10 @@ subtitle: "%%machinename%%"
 
 # Overview
 
+| Name            | IP           | Difficulty |
+|-----------------+--------------+------------|
+| %%machinename%% |              |            |
+
 # Recon
 
 # Initial foothold

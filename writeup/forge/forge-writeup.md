@@ -8,7 +8,7 @@ subtitle: Forge
 # Overview
 
 | Name  | IP           | Difficulty |
-| ---   | ---          | ---        |
+|-------+--------------+------------|
 | Forge | 10.10.11.111 | Medium     |
 
 Basically you use a vulnerability in an upload function to read files from a locally bound web service. You are then able to follow the trace and extract a private key to login via ssh. Finally you exploit a script, which you are able to run as root and which drops you into a gdb shell on error. There you can gain a root session.
@@ -23,7 +23,7 @@ Nmap results will give you three ports:
 - 22/TCP, SSH, open
 - 80/TCP, HTTP, open
 
-```bash
+~~~ {.bash caption="nmap scan results"}
 > sudo nmap -sC -sV -oA nmap/forge -vvv 10.10.11.111
 
 PORT   STATE    SERVICE REASON         VERSION
@@ -41,21 +41,21 @@ PORT   STATE    SERVICE REASON         VERSION
 |_http-server-header: Apache/2.4.41 (Ubuntu)
 | http-methods:
 |_  Supported Methods: GET HEAD POST OPTIONS
-```
+~~~
 
 ## Webapp port 80
 
-If you direct your browser to [http://10.10.11.111](http://10.10.11.111) you will be redirected to http://forge.htb. Therefore we are adding this host to our */etc/hosts* file.
+If you direct your browser to [http://10.10.11.111](http://10.10.11.111) you will be redirected to [http://forge.htb](http://forge.htb). Therefore we are adding this host to our */etc/hosts* file.
 
-![](images/etc_hosts.png)
+![added forge.htb to /etc/passwd](images/etc_hosts.png)
 
 The website then shows us an "image gallery and an "upload"-button in the top right corner.
 
 ![](images/website.png)
 
-The upload dialog lets us upload either an image from disk or one from an url as can be seen from the next figure:
+The upload dialog lets us upload either an image from disk or one from an url as can be seen from the figure \ref{testlabel}:
 
-![](images/upload_image_button.png)
+![Upload image page\label{testlabel}](images/upload_image_button.png)
 
 We can easily upload an image but a file like a command shell will be blocked.
 
@@ -191,7 +191,7 @@ drwxr-xr-x    3 1000     1000         4096 Aug 04 19:23 snap
 
 ## Fetching user.txt
 
-This way we can also read the user.txt file directly requesting the url http://Admin.Forge.htb/upload?u=ftp://user:heightofsecurity123!@Admin.Forge.htb/user.txt.
+This way we can also read the user.txt file directly requesting the url \url{http://Admin.Forge.htb/upload?u=ftp://user:heightofsecurity123!@Admin.Forge.htb/user.txt}.
 
 ```bash
 HTTP/1.1 200 OK

@@ -1,8 +1,7 @@
 .PHONY: build
 
-SRC = test.md
-PDF = test.pdf
-STYLE = breezedark
+SRC = %%inmd%%
+PDF = %%outpdf%%
 
 build:
 	@echo "[*] compiling report"
@@ -10,7 +9,6 @@ build:
 		--from markdown+yaml_metadata_block+raw_html \
 		--to latex \
 		--pdf-engine xelatex \
-		--standalone \
 		--template htb \
-		--highlight-style $(STYLE)
-
+		--listings \
+		--top-level-division=chapter
