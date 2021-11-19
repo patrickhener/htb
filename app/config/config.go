@@ -4,40 +4,25 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"path"
 )
 
 type Config struct {
-	TexmfPath        string
-	WriteupLatexPath string
-	BoxLatexPath     string
-	HTBDir           string
-	HTBAuthor        string
-	HTBProfileID     string
-	RequiredTools    []string
-	RequiredPaths    []string
-	RequiredEnv      []string
+	HTBDir        string
+	HTBAuthor     string
+	HTBProfileID  string
+	RequiredTools []string
+	RequiredPaths []string
+	RequiredEnv   []string
 }
 
 func New() *Config {
-	// check if eisvogel template is there
-	homeDir, err := os.UserHomeDir()
-	if err != nil {
-		fmt.Printf("[-] Cannot read users home dir: %+v", err)
-		os.Exit(-1)
-	}
-
 	cfg := &Config{
-		TexmfPath:     path.Join(homeDir, "texmf", "tex", "latex"),
 		HTBDir:        os.Getenv("HTBDIR"),
 		HTBAuthor:     os.Getenv("HTBAUTHOR"),
 		HTBProfileID:  os.Getenv("HTBPROFILEID"),
-		RequiredTools: []string{"lualatex", "phantomjs"},
+		RequiredTools: []string{"xelatex", "phantomjs"},
 		RequiredEnv:   []string{"HTBDIR", "HTBAUTHOR", "HTBPROFILEID"},
 	}
-
-	cfg.WriteupLatexPath = path.Join(cfg.TexmfPath, "writeup")
-	cfg.RequiredPaths = []string{cfg.TexmfPath, cfg.WriteupLatexPath}
 
 	return cfg
 }

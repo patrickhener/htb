@@ -1,7 +1,7 @@
 .PHONY: build
 
-SRC = forge-writeup.md
-PDF = forge-writeup.pdf
+SRC = ++inmd++
+PDF = ++outpdf++
 
 build:
 	@echo "[*] compiling report"
