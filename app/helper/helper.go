@@ -186,7 +186,7 @@ func CreateLootDir(lootpath string) error {
 // CreateReportDir will create the report directory for a box
 // And copy over the template files from "writeup" style
 // It will also fill in the details for box and author
-func CreateReportDir(reportdir, boxname, basetexfile, preambletexfile string, cfg *config.Config) error {
+func CreateReportDir(reportdir, boxname, basemdfile string, cfg *config.Config) error {
 	if _, err := os.Stat(reportdir); os.IsNotExist(err) {
 		yes, err := GrabYes(fmt.Sprintf("[*] Reportdir %+v does not exist. Create it? [Y/n]", reportdir))
 		if err != nil {
@@ -195,25 +195,37 @@ func CreateReportDir(reportdir, boxname, basetexfile, preambletexfile string, cf
 
 		if yes {
 			// Create directory and copy over template assets using helper function
-			if err := CopyDir(path.Join(cfg.WriteupLatexPath, "template"), reportdir); err != nil {
+			if err := CopyDir(path.Join(cfg.HTBDir, "skel"), reportdir); err != nil {
 				return err
 			}
 			fmt.Println("[+] Template files copied over")
 
 			// Rename template report file
-			oldName := path.Join(reportdir, "report.tex")
-			if err := os.Rename(oldName, basetexfile); err != nil {
+			oldName := path.Join(reportdir, "report.md")
+			if err := os.Rename(oldName, basemdfile); err != nil {
 				return err
 			}
-			// Replace placeholders in preamble
-			read, err := ioutil.ReadFile(preambletexfile)
+			// Replace placeholders in md file
+			read, err := ioutil.ReadFile(basemdfile)
 			if err != nil {
 				return err
 			}
 
-			newContent := strings.Replace(string(read), "++machinename++", strings.Title(boxname), -1)
-			newContent = strings.Replace(string(newContent), "++authorname++", cfg.HTBAuthor, -1)
-			if err := ioutil.WriteFile(preambletexfile, []byte(newContent), 0); err != nil {
+			newContent := strings.ReplaceAll(string(read), "++machinename++", strings.Title(boxname))
+			newContent = strings.ReplaceAll(string(newContent), "++authorname++", cfg.HTBAuthor)
+			if err := ioutil.WriteFile(basemdfile, []byte(newContent), 0); err != nil {
+				return err
+			}
+
+			// Replace placeholders in Makefile
+			read, err = ioutil.ReadFile(path.Join(reportdir, "Makefile"))
+			if err != nil {
+				return err
+			}
+
+			newContent = strings.Replace(string(read), "++inmd++", fmt.Sprintf("%s-writeup.md", boxname), -1)
+			newContent = strings.Replace(string(newContent), "++outpdf++", fmt.Sprintf("%s-writeup.pdf", boxname), -1)
+			if err := ioutil.WriteFile(path.Join(reportdir, "Makefile"), []byte(newContent), 0); err != nil {
 				return err
 			}
 		} else {
@@ -227,27 +239,9 @@ func CreateReportDir(reportdir, boxname, basetexfile, preambletexfile string, cf
 	return nil
 }
 
-/*
-func fetchBatch(box *Box) error {
-
-
-
-		// Now use phantomjs and badge.js to convert html to badge.png
-		cmd := exec.Command("phantomjs", box.badgejs)
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
-
-		err = cmd.Start()
-		if err != nil {
-			return err
-		}
-}
-*/
-
 // UpdateBadge will fetch the html code from hackthebox.eu and then
 // generate a png out of it using phantomjs
-// It will copy it into 'writeup' Latex style image directory as the style
-// is using it in the front matter
+// It will copy it into HTBDIR badge directory
 func UpdateBadge(cfg *config.Config) error {
 	if cfg.HTBProfileID != "" {
 		// Make http request to fetch batch raw response
@@ -339,8 +333,8 @@ func UpdateBadge(cfg *config.Config) error {
 			return err
 		}
 
-		// Finally copy badge.png to /texmf/tex/latex/writeup/images
-		if err := CopyFile(path.Join(tmpDir, "badge.png"), path.Join(cfg.WriteupLatexPath, "images", "badge.png")); err != nil {
+		// Finally copy badge.png to HTBDIR/badge
+		if err := CopyFile(path.Join(tmpDir, "badge.png"), path.Join(cfg.HTBDir, "badge", "badge.png")); err != nil {
 			return err
 		}
 

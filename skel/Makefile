@@ -1,7 +1,7 @@
 .PHONY: build
 
-SRC = %%inmd%%
-PDF = %%outpdf%%
+SRC = ++inmd++
+PDF = ++outpdf++
 
 build:
 	@echo "[*] compiling report"

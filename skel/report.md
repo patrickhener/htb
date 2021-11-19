@@ -1,15 +1,15 @@
 ---
 title: "Hack The Box - Writeup"
-author: "%%author%%"
+author: "++authorname++"
 date: \today
-subtitle: "%%machinename%%"
+subtitle: "++machinename++"
 ---
 
 # Overview
 
 | Name            | IP           | Difficulty |
 |-----------------+--------------+------------|
-| %%machinename%% |              |            |
+| ++machinename++ |              |            |
 
 # Recon
 

@@ -13,15 +13,13 @@ import (
 
 // Box will hold the box object
 type Box struct {
-	name            string
-	htbdir          string
-	lootdir         string
-	reportdir       string
-	writeupTexFile  string
-	baseTexFile     string
-	preambleTexFile string
-	config          *config.Config
-	pdf             string
+	name          string
+	htbdir        string
+	lootdir       string
+	reportdir     string
+	writeupMDFile string
+	config        *config.Config
+	pdf           string
 }
 
 // New is a convenience method to create new box object
@@ -34,9 +32,7 @@ func New(boxname string, cfg *config.Config) *Box {
 
 	box.lootdir = path.Join(box.htbdir, "loot", box.name)
 	box.reportdir = path.Join(box.htbdir, "writeup", box.name)
-	box.baseTexFile = path.Join(box.reportdir, fmt.Sprintf("%s-writeup.tex", box.name))
-	box.preambleTexFile = path.Join(box.reportdir, "files", "preamble.tex")
-	box.writeupTexFile = path.Join(box.reportdir, "files", "writeup.tex")
+	box.writeupMDFile = path.Join(box.reportdir, fmt.Sprintf("%s-writeup.md", box.name))
 	box.pdf = path.Join(box.reportdir, fmt.Sprintf("%s-writeup.pdf", box.name))
 
 	return box
@@ -50,12 +46,17 @@ func (box *Box) Create() error {
 	}
 
 	// Check and handle reportdir creation
-	if err := helper.CreateReportDir(box.reportdir, box.name, box.baseTexFile, box.preambleTexFile, box.config); err != nil {
+	if err := helper.CreateReportDir(box.reportdir, box.name, box.writeupMDFile, box.config); err != nil {
 		return err
 	}
 
 	// Fetch Batch image
 	if err := helper.UpdateBadge(box.config); err != nil {
+		return err
+	}
+
+	// Copy badge image to current box directory
+	if err := helper.CopyFile(path.Join(box.htbdir, "badge", "badge.png"), path.Join(box.reportdir, "assets", "badge.png")); err != nil {
 		return err
 	}
 
