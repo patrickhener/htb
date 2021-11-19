@@ -11,6 +11,7 @@ import (
 	"os/exec"
 	"path"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"github.com/patrickhener/htb/config"
@@ -271,19 +272,50 @@ func UpdateBadge(cfg *config.Config) error {
 			return err
 		}
 
-		// Replace some things
-		htmlStr := strings.Replace(string(html), "<div ", "<div class=\"wrapper\" ", 1)
-		htmlStr = strings.ReplaceAll(htmlStr, "https://www.hackthebox.eu/images/screenshot.png", fmt.Sprintf("data:image/png;base64,%s", HTBCROSSHAIR))
-		htmlStr = strings.ReplaceAll(htmlStr, "_thumb.png", ".png")
-		htmlStr = strings.ReplaceAll(htmlStr, "https://www.hackthebox.eu/images/star.png", fmt.Sprintf("data:image/png;base64,%s", HTBSTAR))
-		htmlStr = strings.ReplaceAll(htmlStr, "url(https://www.hackthebox.eu/images/icon20.png);", fmt.Sprintf("url('data:image/webp;base64,%s'; background-size: 20px;", HTBLOGO))
-
 		// Make temp directory to operate in
-		tmpDir, err := ioutil.TempDir("", "htb")
+		tmpDir, err := ioutil.TempDir("", "htb_")
 		if err != nil {
 			return err
 		}
-		defer os.RemoveAll(tmpDir)
+		if os.Getenv("DEBUG") != "TRUE" {
+			defer os.RemoveAll(tmpDir)
+		} else {
+			fmt.Printf("[i] Temporary directory is: %s\n", tmpDir)
+		}
+
+		htmlStr := string(html)
+
+		// Save profile pic to tmpdir
+		profile := regexp.MustCompile(`(?m)src="https:\/\/.*storage\/avatars[^>]*`)
+		url := profile.FindString(htmlStr)
+		// Remove last character " in this string
+		cleanedUrl := url[5 : len(url)-1]
+		cleanedUrl = strings.ReplaceAll(cleanedUrl, "_thumb.png", ".png")
+
+		pic, err := http.Get(cleanedUrl)
+		if err != nil {
+			return err
+		}
+		defer pic.Body.Close()
+
+		profileByte, err := ioutil.ReadAll(pic.Body)
+		if err != nil {
+			return err
+		}
+
+		// Write profile pic to tmp dir
+		if err := ioutil.WriteFile(path.Join(tmpDir, "profile.png"), profileByte, 0755); err != nil {
+			return err
+		}
+
+		// Replace some things
+		htmlStr = strings.Replace(htmlStr, "<div ", "<div class=\"wrapper\" ", 1)
+		htmlStr = strings.ReplaceAll(htmlStr, "https://www.hackthebox.com/images/screenshot.png", fmt.Sprintf("data:image/png;base64,%s", HTBCROSSHAIR))
+		htmlStr = strings.ReplaceAll(htmlStr, "https://www.hackthebox.com/images/star.png", fmt.Sprintf("data:image/png;base64,%s", HTBSTAR))
+		htmlStr = strings.ReplaceAll(htmlStr, "url(https://www.hackthebox.com/images/icon20.png);", fmt.Sprintf("url('data:image/webp;base64,%s'; background-size: 20px;", HTBLOGO))
+
+		// Replace path to downloaded profile pic
+		htmlStr = strings.ReplaceAll(htmlStr, url, "src=\"profile.png\"")
 
 		// Write badge.html
 		if err := ioutil.WriteFile(path.Join(tmpDir, "badge.html"), []byte(htmlStr), 0755); err != nil {
