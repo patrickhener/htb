@@ -4,7 +4,7 @@ Hack The Box Framework for using pandoc and custom latex style.
 
 ## Installation
 
-`git clone git@git.syss.intern:phener/htb.git`
+`git clone https://github.com/patrickhener/htb`
 
 - define $HTBDIR
 - define $HTBAUTHOR
