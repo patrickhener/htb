@@ -1,3 +1,6 @@
 [submodule "writeup"]
 	path = writeup
 	url = git@github.com:patrickhener/htb-writeups.git
+[submodule "loot"]
+	path = loot
+	url = git@github.com:patrickhener/htb-loot.git
