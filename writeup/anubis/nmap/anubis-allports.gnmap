@@ -1,4 +1,0 @@
-# Nmap 7.92 scan initiated Thu Aug 19 08:21:14 2021 as: nmap -p- -sC -sV -oA nmap/anubis-allports 10.10.11.102
-Host: 10.10.11.102 (windcorp.htb)	Status: Up
-Host: 10.10.11.102 (windcorp.htb)	Ports: 135/open/tcp//msrpc//Microsoft Windows RPC/, 443/open/tcp//ssl|http//Microsoft HTTPAPI httpd 2.0 (SSDP|UPnP)/, 445/open/tcp//microsoft-ds?///, 593/open/tcp//ncacn_http//Microsoft Windows RPC over HTTP 1.0/, 49708/open/tcp//msrpc//Microsoft Windows RPC/	Ignored State: filtered (65530)
-# Nmap done at Thu Aug 19 08:24:34 2021 -- 1 IP address (1 host up) scanned in 200.90 seconds
