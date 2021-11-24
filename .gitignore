@@ -1,5 +1,0 @@
-# exclude every subfolder of ./htb/loot/, but demo
-/loot/*
-!/loot/demo
-build
-template
