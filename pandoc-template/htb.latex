@@ -249,8 +249,8 @@ $endif$
     columns=fullflexible,%
     keepspaces=true,%
     numberfirstline=true,%
-    basicstyle=\ttfamily\small,%
-    numberstyle=\ttfamily\small\color{htb-black},%
+    basicstyle=\ttfamily\scriptsize,%
+    numberstyle=\ttfamily\scriptsize\color{htb-black},%
     numbers=none,%
     xleftmargin=3pt,
     xrightmargin=3pt,
