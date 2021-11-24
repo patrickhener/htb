@@ -36,7 +36,7 @@ There are different modes:
 
 ### Create
 
-This mode creates the folder structure for loot and for the writeup and copies over the template from `writeup` Latex style.
+This mode creates the folder structure for loot and for the writeup and copies over the template from `skel` folder. Also runs badge update. 
 
 ### Edit
 
