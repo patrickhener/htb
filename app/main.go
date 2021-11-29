@@ -8,6 +8,7 @@ import (
 	"github.com/patrickhener/htb/box"
 	"github.com/patrickhener/htb/config"
 	"github.com/patrickhener/htb/helper"
+	"github.com/patrickhener/htb/vpn"
 )
 
 func main() {
@@ -21,24 +22,28 @@ func main() {
 	var mode string = os.Args[1]
 	var reportdir string = path.Join(os.Getenv("HTBDIR"), "writeup")
 
-	// if mode is badge just update the badge.png
-	if mode == "badge" {
+	switch mode {
+	case "badge":
+		// if mode is badge just update the badge.png
 		if err := helper.UpdateBadge(cfg); err != nil {
 			fmt.Printf("[-] Error updating badge: %+v\n", err)
 		}
 		os.Exit(0)
-	}
-
-	// if mode is list just list and exit
-	if mode == "list" {
+	case "list":
+		// if mode is list just list and exit
 		if err := helper.List(reportdir); err != nil {
 			fmt.Printf("[-] Error when listing existing boxes: %+v\n", err)
 		}
 		os.Exit(0)
+	case "vpn":
+		if err := vpn.Handle(); err != nil {
+			fmt.Printf("[-] Error when handling vpn connection: %+v\n", err)
+		}
+		os.Exit(0)
 	}
 
-	// This hits if mode != list
-	// In this case switch over mode
+	// This hits if mode is none of the above
+	// In this case switch again over mode
 	var boxname string = os.Args[2]
 	box := box.New(boxname, cfg)
 
@@ -60,6 +65,6 @@ func main() {
 			fmt.Printf("[-] Error when clearing box report: %+v\n", err)
 		}
 	default:
-		fmt.Println("Valid modes are: create, edit, open, list or clear")
+		fmt.Println("Valid modes are: create, edit, open, list, clear, badge and vpn")
 	}
 }

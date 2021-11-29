@@ -33,9 +33,9 @@ func (c *Config) Init() error {
 
 	// Sanity checks
 	if len(os.Args) < 3 {
-		if len(os.Args) == 1 || os.Args[1] != "list" && os.Args[1] != "badge" {
+		if len(os.Args) == 1 || os.Args[1] != "list" && os.Args[1] != "badge" && os.Args[1] != "vpn" {
 			fmt.Printf("Usage: %+v <mode> <box-name>\n", os.Args[0])
-			fmt.Println("Valid modes are: create, edit, open, list or clear")
+			fmt.Println("Valid modes are: create, edit, open, list, clear, badge or vpn")
 			os.Exit(0)
 		}
 	}
