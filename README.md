@@ -25,6 +25,7 @@ Copy over the `htb.latex` file from the repository to `~/.pandoc/templates/htb.l
 - texlive
 - phantomjs
 - VSCode (edit mode calls 'code %s')
+- nmcli (NetworkManager for vpn)
 
 ## App
 
@@ -57,6 +58,10 @@ This mode deletes the corresponding loot and writeup folder of the box after ask
 ### Badge
 
 This mode updates your badge.png and copies it over to the '$HTBDIR/badge' folder. This will be run automatically everytime you are creating a box.
+
+### VPN
+
+Brings the vpn up and down. OpenVPN files have to be imported and usable with `nmcli`.
 
 ## Building the report
 
